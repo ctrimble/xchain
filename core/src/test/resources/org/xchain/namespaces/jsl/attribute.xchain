@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0">
+
+  <sax:pipeline xchain:name="jsl:template-attribute">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+          <jsl:attribute name="'test:attribute'" xmlns:test="http://test/1">this is the attribute value</jsl:attribute>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <sax:pipeline xchain:name="jsl:element-attribute">
+    <sax:command-source>
+      <jsl:template>
+        <jsl:element name="'element'">
+          <jsl:attribute name="'test:attribute'" xmlns:test="http://test/1">this is the attribute value</jsl:attribute>
+        </jsl:element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <sax:pipeline xchain:name="jsl:no-prefix-without-mapping">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+          <jsl:attribute name="'attribute'">this is the attribute value</jsl:attribute>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <sax:pipeline xchain:name="jsl:no-prefix-with-mapping">
+    <sax:command-source>
+      <jsl:template>
+        <element xmlns="http://test/1">
+          <jsl:attribute name="'attribute'">this is the attribute value</jsl:attribute>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    This chain should fail with a SAXException, since it defines the prefix test to different uris.
+    -->
+  <sax:pipeline xchain:name="jsl:conflicting-prefix-decl-with-parent">
+    <sax:command-source>
+      <jsl:template>
+        <element test:attribute="this is the attribute value" xmlns:test="http://test/1">
+          <jsl:attribute name="'test:attribute'" xmlns:test="http://test/2">this is the attribute value</jsl:attribute>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    This chain should fail with a SAXException, since it defines the prefix test to different uris.
+    -->
+  <sax:pipeline xchain:name="jsl:conflicting-prefix-decl-with-attribute">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+          <jsl:attribute name="'test:attribute'" xmlns:test="http://test/1">this is the attribute value</jsl:attribute>
+          <jsl:attribute name="'test:attribute'" xmlns:test="http://test/2">this is the attribute value</jsl:attribute>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+</xchain:catalog>

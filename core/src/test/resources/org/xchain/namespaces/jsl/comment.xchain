@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<?xchain-stylesheet system-id="./comment.xsl"?>
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0">
+
+  <!--
+    A pipeline that creates one element with one basic comment.
+    -->
+  <sax:pipeline xchain:name="jsl:simple-comment-pipeline">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+          <jsl:comment>simple comment</jsl:comment>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    Calling this template in a comment should output 'raw text comment'.
+    -->
+  <jsl:template xchain:name="jsl:raw-executed-comment">raw executed comment</jsl:template>
+
+  <!--
+    Calling this template in a comment should output 'jsl:text executed comment'.
+    -->
+  <jsl:template xchain:name="jsl:text-executed-comment">
+    <jsl:text>jsl:text executed comment</jsl:text>
+  </jsl:template>
+
+  <!--
+    Calling this template in a comment should output 'jsl:value-of executed comment'.
+    -->
+  <jsl:template xchain:name="jsl:value-of-executed-comment">
+    <jsl:value-of select="'jsl:value-of executed comment'"/>
+  </jsl:template>
+
+  <!--
+    Calling this template in a comment should output 'mixed executed comment'
+    -->
+  <jsl:template xchain:name="jsl:mixed-executed-comment">
+    <jsl:value-of select="'mixed'"/> executed <jsl:text>comment</jsl:text>
+  </jsl:template>
+
+  <!--
+    Calling this template in a comment should output 'xchain:when executed comment'
+    -->
+  <jsl:template xchain:name="jsl:when-executed-comment">
+    <xchain:choose>
+      <xchain:when test="true()">xchain:when</xchain:when>
+      <xchain:otherwise>xchain:otherwise</xchain:otherwise>
+    </xchain:choose>
+    <jsl:text> executed comment</jsl:text>
+  </jsl:template>
+
+  <!--
+    Calling this template in a comment should 'raw text comment, jsl:text executed comment, jsl:value-of executed comment, xchain:when executed comment'
+    -->
+  <jsl:template xchain:name="jsl:deep-executed-comment">
+    <xchain:execute name="'jsl:raw-executed-comment'" system-id="'resource://context-class-loader/org/xchain/namespaces/jsl/comment.xchain'"/>
+    <jsl:text>, </jsl:text>
+    <xchain:execute name="'jsl:text-executed-comment'" system-id="'resource://context-class-loader/org/xchain/namespaces/jsl/comment.xchain'"/>
+    <jsl:text>, </jsl:text>
+    <xchain:execute name="'jsl:value-of-executed-comment'" system-id="'resource://context-class-loader/org/xchain/namespaces/jsl/comment.xchain'"/>
+    <jsl:text>, </jsl:text>
+    <xchain:execute name="'jsl:when-executed-comment'" system-id="'resource://context-class-loader/org/xchain/namespaces/jsl/comment.xchain'"/>
+  </jsl:template>
+
+</xchain:catalog>

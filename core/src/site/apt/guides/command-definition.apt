@@ -1,0 +1,139 @@
+~~
+~~    Copyright 2011 meltmedia
+~~
+~~    Licensed under the Apache License, Version 2.0 (the "License");
+~~    you may not use this file except in compliance with the License.
+~~    You may obtain a copy of the License at
+~~
+~~        http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~    Unless required by applicable law or agreed to in writing, software
+~~    distributed under the License is distributed on an "AS IS" BASIS,
+~~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~    See the License for the specific language governing permissions and
+~~    limitations under the License.
+~~
+
+ ------
+ Creating Commands
+ ------
+ Christian Trimble
+ ------
+ October 2008
+ ------
+
+~~ NOTE: For help with the syntax of this file, see:
+~~ http://maven.apache.org/doxia/references/apt-format.html
+
+{Creating Commands}
+
+* Overview
+
+  In this guide we will create a very basic XChain Command and create an XChain Catalog that uses the command to produce output.  There are several steps we will take in
+  creating this command.  First, we will add a file to our applications resources, so that XChains will scan our application for commands.  Second, we will create a
+  java package to hold our command and assign it a namespace.  Third, we will define our new command.  And finally, we will create a web page that uses our command to
+  create output.
+
+* Adding the jar to the class scanner.
+
+  The XChains Lifecycle will automatically scan for XChain Commands when the lifecycle starts.  In order to reduce the number of jars that are scanned, the
+  XChains class scanner only searches those jars and wars that contain the file META-INF/xchain.xml.  The file does not need to contain any text.  Simply by including
+  a file with that name, an archive will be scanned.
+
+* Defining the namespace for a package.
+
+  The XChains class scanner only binds commands in packages that have an org.xchain.annotations.Namespace annotation.  To get our new command working, we will define the
+  package org.xchain.example.namespaces.guide and will bind that package to the namespace http://www.xchain.org/guide.  To do this, we will create a package-info.java file
+  in our package and add the needed annotation to the package.
+  
++------------------------------------------+
+/**
+  * <p>The Guide command package.</p>
+  */
+@org.xchain.annotations.Namespace(uri="http://www.xchain.org/guide")
+package org.xchain.example.namespaces.guide;
++------------------------------------------+
+  
+  Now, any comands defined in this package will be in the http://www.xchain.org/guide namespace.
+
+* Defining a hello world command
+
+  We are now ready to create a very basic command in the http://www.xchain.org/guide namespace.  XChain Commands are implemented as abstract java classes that implement the org.xchain.Command
+  interface, provide an org.xchain.annotations.Element annotation, and have an implementation of the execute method.  This is a basic command that defines our hello variable in the
+  context.
+
++------------------------------------------+
+package org.xchain.example.namespaces.guide;
+
+import javax.xml.namespace.QName;
+
+import org.apache.commons.jxpath.JXPathContext;
+
+import org.xchain.Command;
+import org.xchain.annotations.Element;
+import org.xchain.framework.jxpath.Scope;
+import org.xchain.framework.jxpath.ScopedQNameVariables;
+
+/**
+ * <p>Definition of the {http://www.xchain.org/guide}hello-world command.  This command sets the variable {http://www.xchain.org/guide}hello
+ * to the value "Hello World".</p>
+ */
+@Element(localName="hello-world")
+public abstract class HelloWorldCommand
+  implements Command
+{
+  /**
+   * This method will be called when an {http://www.xchain.org/guide}hello-world element is encountered.
+   *
+   * @param context the context in which this command is called.
+   */
+  public boolean execute( JXPathContext context )
+    throws Exception
+  {
+    // create a QName for the variable that we are going to set.
+    QName name = QName.valueOf("{http://www.xchain.org/guide}hello");
+
+    // declare the variable.  Out of the box, JXPath does not cleanly implement variables with
+    // QNames and it does not have a concept of scope, so we will need to cast the variables
+    // class to a org.xchain.framework.jxpath.ScopedQNameVariables class.
+    ((ScopedQNameVariables)context.getVariables()).declareVariable(name, "Hello World", Scope.chain);
+
+    // return true, so that other chains will execute.
+    return true;
+   }
+}
++------------------------------------------+
+
+  This command has an Element annotation with a localName of hello-world, so it will be bound to the QName {http://www.xchain.org/guide}hello-world.
+
+* Defining the hello world web page for our new command.
+
+  Now that we have our command defined, we need to use it.  To do this we will define a new web page that calls the command to set our variable, and then we will output that variable from
+  the user guide application.  To do this, we need to create an xhtml file in the web application that contains an xml element for our new command.  Then we will read the variable that it
+  declares and output that to the document.
+
+  To do this, we are going to use the XChain JSL Namespace and an XChain Stylesheet Declaration to hide some of the details not related to defining and using a command.  If you have not read
+  the guides for these two features, please do so.
+
++------------------------------------------+
+<?xml version="1.0" encoding="UTF-8"?>
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/xhtml.xsl"?>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:guide="http://www.xchain.org/guide">
+
+  <!-- This calls the execute method of our command. -->
+  <guide:hello-world/>
+
+  <head>
+    <title><jsl:value-of select="$guide:hello"/></title>
+  </head>
+
+  <body>
+    <!-- This outputs the variable to the browser. -->
+    <h1><jsl:value-of select="$guide:hello"/></h1>
+  </body>
+
+</html>
++------------------------------------------+

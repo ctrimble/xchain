@@ -1,0 +1,88 @@
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+   xmlns:test="http://www.xchain.org/hibernate/test/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0"
+   xmlns:hibernate="http://www.xchain.org/hibernate/1.0">
+
+  <xchain:chain xchain:name="test-list-command-simple">
+  	<xchain:variable name="queryResult" select="'default'" scope="request"/>
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person order by name'">
+				<hibernate:list result="$queryResult"/>
+			</hibernate:query>
+		</hibernate:transaction>
+    
+    <xchain:variable name="result" select="$queryResult[1]/name"/>
+  </xchain:chain>
+  
+   <xchain:chain xchain:name="test-list-command-simple-variable">
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person order by name'">
+				<hibernate:list variable="queryResult" scope="request"/>
+			</hibernate:query>
+		</hibernate:transaction>
+    
+    <xchain:variable name="result" select="$queryResult[1]/name"/>
+  </xchain:chain> 
+  
+  <xchain:chain xchain:name="test-list-command-parameters">
+  	<xchain:variable name="queryNameParameter" select="'Sarah'"/>
+  	<xchain:variable name="queryResult" select="'default'" scope="request"/>
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person where name = :name'">				
+				<hibernate:parameter name="'name'" value="$queryNameParameter"/>
+				<hibernate:list result="$queryResult"/>
+			</hibernate:query>			
+		</hibernate:transaction>
+    <xchain:variable name="result" select="$queryResult[1]/name" scope="request"/>
+   </xchain:chain>
+    
+  <xchain:chain xchain:name="test-list-command-empty">
+  	<xchain:variable name="queryResult" select="'default'" scope="request"/>
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person where name = :name'">
+				<hibernate:parameter name="'name'" value="'Alfred'"/>
+				<hibernate:list result="$queryResult"/>
+			</hibernate:query>			
+		</hibernate:transaction>
+    
+    <xchain:variable name="result" select="$queryResult[1]/name"/>
+  </xchain:chain>  
+  
+  <xchain:chain xchain:name="test-list-command-max-result">
+  	<xchain:variable name="result" select="'default'" scope="request"/>
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person order by name'">
+				<hibernate:max-result size="2"/>
+				<hibernate:list result="$result"/>
+			</hibernate:query>			
+		</hibernate:transaction>
+  </xchain:chain>    
+
+  <xchain:chain xchain:name="test-list-command-first-result">
+  	<xchain:variable name="result" select="'default'" scope="request"/>
+    	<hibernate:transaction>
+			<hibernate:query query="'from Person order by name'">
+				<hibernate:first-result start="2"/>
+				<hibernate:list result="$result"/>
+			</hibernate:query>			
+		</hibernate:transaction>
+  </xchain:chain> 
+
+</xchain:catalog>

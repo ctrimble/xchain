@@ -1,0 +1,112 @@
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:basic="http://www.xchain.org/test/component">
+  
+  <xchain:chain xchain:name="basic-component-test">
+	<xchain:variable name="result" select="getResult($basic:basic-component)"/>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="basic-component-param-test">
+	<xchain:variable name="result" select="getResult($basic:basic-component, 'initial')"/>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="java-object-component-param-test">
+	<xchain:variable name="result" select="javaObjectTest($basic:basic-component, $object-param)"/>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="begin-component-test">
+	<xchain:variable name="result" select="getResult($basic:begin-component)"/>
+  </xchain:chain>  
+  
+  <xchain:chain xchain:name="end-component-test">
+	<xchain:variable name="result" select="testParam($basic:end-component, $object-param)"/>
+  </xchain:chain>    
+  
+  <xchain:chain xchain:name="count-component-test">
+	<xchain:variable name="result" select="doCount($basic:count-component)"/>
+	<xchain:variable name="result" select="doCount($basic:count-component)"/>
+	<xchain:variable name="result" select="doCount($basic:count-component)"/>
+	<xchain:variable name="result" select="doCount($basic:count-component)"/>
+	<xchain:variable name="result" select="doCount($basic:count-component)"/>
+  </xchain:chain>   
+  
+  <xchain:chain xchain:name="field-component-test">
+	<xchain:variable name="private-result" select="getPrivateResult($basic:field-component)"/>
+	<xchain:variable name="protected-result" select="getProtectedResult($basic:field-component)"/>
+	<xchain:variable name="public-result" select="getPublicResult($basic:field-component)"/>
+  </xchain:chain>  
+  
+  <xchain:chain xchain:name="simple-method-component-test">
+	<xchain:variable name="result" select="getResult($basic:simple-method-component)"/>
+  </xchain:chain>    
+
+  <xchain:chain xchain:name="namespace-field-component-test">
+	<xchain:variable name="result" select="getResult($basic:namespace-field-component)"/>
+  </xchain:chain> 
+  
+  <xchain:chain xchain:name="child-field-component-test">
+	<xchain:variable name="public-result" select="getPublicResult($basic:child-field-component)"/>
+	<xchain:variable name="protected-result" select="getProtectedResult($basic:child-field-component)"/>
+  </xchain:chain>   
+
+
+  <xchain:chain xchain:name="child-method-component-test">
+	<xchain:variable name="result" select="getResult($basic:child-method-component)"/>
+  </xchain:chain> 
+  
+  <xchain:chain xchain:name="chain-scope-component-test">
+  	<xchain:variable name="value" select="'first'"/>
+  	<xchain:execute name="'chain-scope-command'"/>
+  	
+  	<xchain:variable name="value" select="'second'"/>
+  	<xchain:variable name="second-chain-result" select="getResult($basic:chain-scope-component)" scope="request"/>  	
+  </xchain:chain>   
+  
+  <xchain:chain xchain:name="chain-scope-command">
+  	<xchain:variable name="first-chain-result" select="getResult($basic:chain-scope-component)" scope="request"/>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="execution-scope-component-test">
+  	<xchain:variable name="result" select="getResult($basic:execution-scope-component)" scope="request"/>
+  </xchain:chain>     
+  
+  <xchain:chain xchain:name="request-scope-component-test">
+  	<xchain:variable name="value" select="'final-value'" scope="request"/>
+  	<xchain:variable name="result" select="getResult($basic:request-scope-component)"/>
+  </xchain:chain>    
+  
+  <xchain:chain xchain:name="chain-scope-exception-component-test"> 	
+  	<xchain:variable name="result" select="setTestParam($basic:chain-scope-component, $test-param)" scope="request"/>
+  	<basic:exception-command/>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="execution-scope-exception-component-test"> 	
+  	<xchain:variable name="result" select="setTestParam($basic:execution-scope-component, $test-param)" scope="request"/>
+  	<basic:exception-command/>  	
+  </xchain:chain> 
+  
+  <xchain:chain xchain:name="failed-injection-exception-component-test"> 	
+  	<xchain:variable name="result" select="getResult($basic:execution-scope-component)" scope="request"/>
+  </xchain:chain>   
+  
+  <xchain:chain xchain:name="allowed-injection-exception-component-test"> 	
+  	<xchain:variable name="result" select="getResult($basic:request-scope-component)" scope="request"/>
+  </xchain:chain>     
+</xchain:catalog>

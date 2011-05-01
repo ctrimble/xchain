@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog xmlns:xchain="http://www.xchain.org/core/1.0">
+  <xchain:execute xchain:name="xchain:execute-command-internal"
+    name="'xchain:internal-command'"/>
+
+  <xchain:execute xmlns:xchain="http://www.xchain.org/core/1.0"
+    xchain:name="xchain:execute-command-external" 
+    name="'xchain:execute-command-external'" 
+    system-id="'resource://context-class-loader/org/xchain/namespaces/core/execute-command-external.xchain'" />
+
+  <xchain:chain xchain:name="xchain:internal-command">
+    <xchain:variable name="result" select="'internal'"/>
+  </xchain:chain>
+
+  <xchain:execute xchain:name="xchain:execute-command-relative"
+    name="'xchain:execute-command-external'"
+    system-id="'./execute-command-external.xchain'"/>
+
+  <xchain:chain xchain:name="xchain:execute-command-deep-internal">
+    <xchain:execute name="'xchain:execute-command-internal'" system-id="'resource://context-class-loader/org/xchain/namespaces/core/execute-command.xchain'"/>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="xchain:execute-command-translated">
+    <xchain:execute name="'xchain:translated-command'" system-id="'./execute-command-translated.xchain'"/>
+  </xchain:chain>
+
+</xchain:catalog>

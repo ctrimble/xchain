@@ -1,0 +1,65 @@
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+   xmlns:test="http://www.xchain.org/hibernate/test/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0"
+   xmlns:hibernate="http://www.xchain.org/hibernate/1.0">
+
+  <xchain:chain xchain:name="test-validate-command-1">
+      <hibernate:transaction>
+        <test:test-validate-1 />
+        <hibernate:validate select="$test-validate-bean">
+          <hibernate:valid>
+            <xchain:variable name="test-success" select="'true'"/>
+          </hibernate:valid>
+          <hibernate:invalid>
+            <xchain:variable name="test-failure" select="'true'"/>
+          </hibernate:invalid>
+        </hibernate:validate>
+      </hibernate:transaction>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="test-validate-command-2">
+      <hibernate:transaction>
+        <test:test-validate-2 />
+        <hibernate:validate select-single-node="$test-validate-bean">
+          <hibernate:valid>
+            <xchain:variable name="test-failure" select="'true'"/>
+          </hibernate:valid>
+          <hibernate:invalid>
+            <xchain:variable name="test-success" select="'true'"/>
+          </hibernate:invalid>
+        </hibernate:validate>
+      </hibernate:transaction>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="test-validate-command-3">
+      <hibernate:transaction>
+        <test:test-validate-3 />
+        <hibernate:validate select-nodes="$test-validate-beans/beans">
+          <hibernate:valid>
+            <xchain:variable name="test-failure" select="'true'"/>
+          </hibernate:valid>
+          <hibernate:invalid>
+            <xchain:variable name="test-success" select="'true'"/>
+          </hibernate:invalid>
+        </hibernate:validate>
+      </hibernate:transaction>
+  </xchain:chain>
+
+</xchain:catalog>

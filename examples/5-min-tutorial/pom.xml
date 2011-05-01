@@ -1,0 +1,93 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.xchain.examples</groupId>
+  <artifactId>tutorial</artifactId>
+  <packaging>war</packaging>
+  <version>0.5.0-SNAPSHOT</version>
+  <name>XChains 5 Minute Tutorial Site</name>
+
+  <properties>
+   <monitor-local-changes>true</monitor-local-changes>
+
+   <!-- Properties exposed for the site plugin. -->
+   <projectGroupId>${groupId}</projectGroupId>
+   <projectArtifactId>${artifactId}</projectArtifactId>
+   <projectVersion>${version}</projectVersion>
+   <archetypeGroupId>${groupId}</archetypeGroupId>
+   <archetypeArtifactId>${artifactId}-archetype</archetypeArtifactId>
+   <archetypeVersion>${version}</archetypeVersion>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xchain</groupId>
+      <artifactId>xchain-container</artifactId>
+      <version>${pom.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xchain</groupId>
+      <artifactId>xchain-core</artifactId>
+      <version>${pom.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-archetype-plugin</artifactId>
+        <version>2.0-alpha-4</version>
+        <configuration>
+          <archetypeFilteredExtensions>xml properties</archetypeFilteredExtensions>
+          <archetypeLanguages>none</archetypeLanguages>
+        </configuration>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <configuration>
+            <webResources>
+              <resource>
+                <filtering>true</filtering>
+                <directory>src/main/webapp</directory>
+                <includes>
+                  <include>**/*.xml</include>
+                  <include>**/*.txt</include>
+                  <include>**/*.properties</include>
+                </includes>
+              </resource>
+            </webResources>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>2.0-beta-7</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>

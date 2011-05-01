@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0">
+
+  <!--
+    A pipeline that creates one element.
+    -->
+  <sax:pipeline xchain:name="jsl:element">
+    <sax:command-source>
+      <jsl:template>
+        <element/>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    A pipeline that creates nested elements
+    -->
+  <sax:pipeline xchain:name="jsl:nested-elements">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+          <element/>
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    A pipeline that creates nested elements, attributes, and text nodes.
+    -->
+  <sax:pipeline xchain:name="jsl:complex-nested-elements">
+    <sax:command-source>
+      <jsl:template>
+        <element attribute1="value1" attribute2="value2">
+          text1
+          <element>text2</element>
+          text3
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    A pipeline that creates nested elements, attributes, and text nodes.
+    -->
+  <sax:pipeline xchain:name="jsl:attribute-value-template">
+    <sax:command-source>
+      <jsl:template>
+        <element attribute="{$attribute-value}" concat-attribute="pre{$attribute-value}post"/>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    A pipeline that creates a text node with jsl:value-of.
+    -->
+  <sax:pipeline xchain:name="jsl:value-of">
+    <sax:command-source>
+      <jsl:template>
+        <element><jsl:value-of select="$value-of"/></element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <!--
+    A pipeline that controls whitespace with jsl:text.  The test for this reports the whitespace
+    between <element> and <jsl:text> as characters.  Should this be ignorableWhitespace?
+    -->
+  <sax:pipeline xchain:name="jsl:text">
+    <sax:command-source>
+      <jsl:template>
+        <element>
+
+          <jsl:text>value</jsl:text>
+
+        </element>
+      </jsl:template>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+  <sax:pipeline xchain:name="jsl:execute-template">
+    <sax:command-source>
+      <xchain:execute name="$template-name" system-id="'./test-templates.xchain'"/>
+    </sax:command-source>
+    <sax:result select="$result"/>
+  </sax:pipeline>
+
+</xchain:catalog>

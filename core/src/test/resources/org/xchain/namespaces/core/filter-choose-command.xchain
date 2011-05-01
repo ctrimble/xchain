@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:filter-choose xchain:name="xchain:test-top-level">
+    <xchain:when test="$call-first-when">
+      <xchain:variable name="first-when-result" select="true()"/>
+    </xchain:when>
+    <xchain:when test="$call-second-when">
+      <xchain:variable name="second-when-result" select="true()"/>
+    </xchain:when>
+    <xchain:otherwise>
+      <xchain:variable name="otherwise-result" select="true()"/>
+    </xchain:otherwise>
+  </xchain:filter-choose>
+
+  <xchain:chain xchain:name="xchain:test-nested">
+    <xchain:filter-choose>
+      <xchain:when test="$call-first-when">
+        <xchain:variable name="first-when-result" select="true()"/>
+      </xchain:when>
+      <xchain:when test="$call-second-when">
+        <xchain:variable name="second-when-result" select="true()"/>
+      </xchain:when>
+      <xchain:otherwise>
+        <xchain:variable name="otherwise-result" select="true()"/>
+      </xchain:otherwise>
+    </xchain:filter-choose>
+  </xchain:chain>
+
+  <xchain:filter-choose xchain:name="xchain:test-prefix-mapping">
+    <xchain:when test="$test:call-first-when" xmlns:test="http://www.xchain.org/test">
+      <xchain:variable name="test:first-when-result" select="true()"/>
+    </xchain:when>
+    <xchain:when test="$test:call-second-when" xmlns:test="http://www.xchain.org/test">
+      <xchain:variable name="test:second-when-result" select="true()"/>
+    </xchain:when>
+    <xchain:otherwise xmlns:test="http://www.xchain.org/test">
+      <xchain:variable name="test:otherwise-result" select="true()"/>
+    </xchain:otherwise>
+  </xchain:filter-choose>
+
+</xchain:catalog>

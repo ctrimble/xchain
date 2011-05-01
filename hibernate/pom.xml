@@ -1,0 +1,193 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.xchain</groupId>
+    <artifactId>xchain</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.xchain</groupId>
+  <artifactId>xchain-hibernate</artifactId>
+
+  <name>Hibernate Namespace</name>
+  <url>http://www.xchain.org/hibernate/</url>
+
+  <scm>
+    <connection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/hibernate/</connection>
+    <developerConnection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/hibernate/</developerConnection>
+    <url>http://svn.meltmedia.com/repos/xchain/trunk/hibernate/</url>
+  </scm>
+
+  <distributionManagement>
+    <site>
+      <id>xchain.site</id>
+      <url>scp://www.xchain.org/home/xchain/www/www.xchain.org/hibernate/</url>
+    </site>
+  </distributionManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.xchain</groupId>
+      <artifactId>xchain-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-commons-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-search</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javassist</groupId>
+      <artifactId>javassist</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>jta</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Logging Dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!--
+    This is a fake dependency to remove commons-logging from all transitive dependencies
+    as SLF4J is wrapping the commons-logging API's for us.
+    See: http://day-to-day-stuff.blogspot.com/2007/10/announcement-version-99-does-not-exist.html
+    -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+           <id>html</id>
+           <reports>
+            <report>javadoc</report>
+           </reports>
+          </reportSet>
+          <reportSet>
+            <id>NamespaceDoclet</id>
+            <configuration>
+              <doclet>org.xchain.framework.doclets.NamespaceDoclet</doclet>
+              <useStandardDocletOptions>flase</useStandardDocletOptions>
+
+              <docletArtifacts>
+              <docletArtifact>
+                <groupId>org.xchain</groupId>
+                <artifactId>xchain-core</artifactId>
+                <version>${project.version}</version>                
+              </docletArtifact>
+              <docletArtifact>
+                <groupId>org.hibernate</groupId>
+                <artifactId>jtidy</artifactId>
+                <version>r8-20060801</version>                
+              </docletArtifact>
+              <docletArtifact>
+                <groupId>net.sf.saxon</groupId>
+                <artifactId>saxonb</artifactId>
+                <version>9.1.0.2</version>
+              </docletArtifact>
+              </docletArtifacts>
+
+              <destDir>../generated-site/</destDir>
+
+              <!-- For the project-reports page-->
+              <name>NamespaceDoclet</name>
+              <description>Namespace documentation.</description>
+            </configuration>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>        
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jxr-maven-plugin</artifactId>
+        <configuration>
+          <linkJavadoc>true</linkJavadoc>
+          <javadocDir>${basedir}/target/site/apidocs</javadocDir>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.8.1</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <outputDirectory>${basedir}/target/site/reports/checkstyle</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <outputDirectory>${basedir}/target/site/reports/cobertura</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <configuration>
+          <targetJdk>1.5</targetJdk>
+          <rulesets>
+            <ruleset>/rulesets/basic.xml</ruleset>
+            <ruleset>/rulesets/unusedcode.xml</ruleset>
+            <ruleset>/rulesets/imports.xml</ruleset>
+          </rulesets>
+          <format>xml</format>
+          <linkXref>true</linkXref>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <minimumTokens>100</minimumTokens>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>

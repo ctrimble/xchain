@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:servlet="http://www.xchain.org/servlet/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <xchain:chain xchain:name="servlet:get">
+    <sax:pipeline>
+      <sax:command-source>
+        <jsl:template>
+          <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+            <head>
+              <title>XChain Introduction</title>
+            </head>
+            <body>
+              <div>Welcome to the XChain 5 Minute Introduction Tutorial</div>
+              
+              <div>Welcome to the Introduction tutorial.  So far you have seen how to create, build and deploy the XChains tutorial project.<br/>
+                One of the features XChains supports is live monitoring.  Any changes you make to your xml files will be picked up immediately, saving you the hassle of rebuilding and redeploying your app during development.<br/>
+                Now lets see an example of live monitoring.<br/>
+                Open the introduction <code>index.xhtml</code> in the <code>src/main/webapp/intro/</code> directory.<br/>
+                Here you see the xhtml source for this page.  Towards the end of the file you should see this block of code:</div>
+              <div>
+                <code> &lt;!--<br/>
+                  Congratulations, you have complete the XChains 5 minute introduction tutorial.  Return to the root index to see more tutorials.<br/>
+                  --&gt;</code>
+              </div>
+              <div>Remove the comment tags (&lt;!--, --&gt;) surrounding this block and save the file.<br/>
+                Now refresh this page.</div>
+
+              <div>
+                Congratulations, you have complete the XChains 5 minute introduction tutorial.  Return to the <a href="../index.xhtml">root index</a> to see more tutorials.
+              </div>
+            </body>
+          </html>
+        </jsl:template>
+      </sax:command-source>
+      <sax:serializer method="'xhtml'"/>
+      <servlet:result/>
+    </sax:pipeline>
+  </xchain:chain>
+</xchain:catalog>

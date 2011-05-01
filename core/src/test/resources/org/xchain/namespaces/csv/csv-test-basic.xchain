@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog xmlns:xchain="http://www.xchain.org/core/1.0" xmlns:csv="http://www.xchain.org/csv/1.0">
+  <xchain:chain xchain:name="test00">
+    <csv:csv-writer output-stream="$output">
+      <csv:row>
+        <csv:cell select="'cell 1'" />
+        <csv:cell select="'cell 2'" />
+      </csv:row>
+      <csv:row>
+        <csv:cell select="'cell 3'" />
+        <csv:cell select="'cell 4'" />
+      </csv:row>
+    </csv:csv-writer>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="test01">
+    <csv:csv-writer output-stream="$output">
+      <csv:row>
+        <csv:cell select="concat('a double quote' , $double-quote)" />
+        <csv:cell select="concat('a single quote' , $single-quote)" />
+        <csv:cell select="''" />
+      </csv:row>
+      <csv:row>
+        <csv:cell select="'Comma ,'" />
+        <csv:cell select="concat('a non column', $double-quote, ',', $double-quote, 'another non column')" />
+        <csv:cell select="'just another cell'" />
+      </csv:row>
+    </csv:csv-writer>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="test02">
+    <csv:csv-writer output-stream="$output">
+      <csv:row>
+        <csv:cell select="'00'" />
+      </csv:row>
+      <csv:row>
+        <csv:cell select="'10'" />
+        <csv:cell select="'11'" />
+      </csv:row>
+      <csv:row>
+        <csv:cell select="'20'" />
+        <csv:cell select="'21'" />
+        <csv:cell select="'22'" />
+      </csv:row>
+    </csv:csv-writer>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="test03">
+    <csv:csv-writer output-stream="$output">
+      <csv:row>
+        <csv:cell select="java.lang.Integer.valueOf('5')"/>
+      </csv:row>
+    </csv:csv-writer>
+  </xchain:chain>
+</xchain:catalog>

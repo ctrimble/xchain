@@ -1,0 +1,116 @@
+~~
+~~    Copyright 2011 meltmedia
+~~
+~~    Licensed under the Apache License, Version 2.0 (the "License");
+~~    you may not use this file except in compliance with the License.
+~~    You may obtain a copy of the License at
+~~
+~~        http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~    Unless required by applicable law or agreed to in writing, software
+~~    distributed under the License is distributed on an "AS IS" BASIS,
+~~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~    See the License for the specific language governing permissions and
+~~    limitations under the License.
+~~
+
+ ------
+ Creating Commands
+ ------
+ Christian Trimble
+ ------
+ October 2008
+ ------
+
+~~ NOTE: For help with the syntax of this file, see:
+~~ http://maven.apache.org/doxia/references/apt-format.html
+
+{Creating Attributes}
+
+* Overview
+
+
+* Defining an attribute.
+
+  An xchain attribute is defined including an abstract method in a command and annotating it with the Attribute annotation.  The method should have one parameter of type JXPathContext and may throw an exception.  Here is an example of an attribute definition:
+
++------------------------------+
+  @Attribute(localName="name", type=AttributeType.JXPATH_VALUE)
+  public static String getName( JXPathContext context );
++------------------------------+
+
+  This example defines a name attribute on the current XChain command.  The value of that attribute will be treated as a jxpath, so calling:
+
++------------------------------+
+  String name = getName(context);
++------------------------------+
+
+  from inside a command that had the attribute:
+
++------------------------------+
+  <commnd name="$name"/>
++------------------------------+
+
+  will return the value of the name variable.  If the name attribute is not defined, or the jxpath caused an exception to be thrown, then null will be returned.
+
+* The type attribute and its effect of the attribute.
+
+  An Attribute annotation has a type attribute that tells XChains how to convert the attribute in the xml into a java object.  Each AttributeType cause the value of the xml attribute to be treated differently.  Some will treat the value as an xpath, others will treat it as a literal value.  This section defines the attribute types, they kind of code the produce, and the valid return types that they support.
+
+** AttributeType.ATTRIBUTE_VALUE_TEMPLATE
+
+  The attribute value template type treats the value as an attribute value template, much like attribute value templates in xslt.  The value is a literal, except inside \{\} areas that contain jxpaths.  The literal parts and jxpath parts are concatinated into a string and converted into the return type.  You can escape \{ and \} by doubling them in the value.
+
+  Currently this attribute type only supports String and Enum types, but others will be supported in the future.
+
+  A command with the attribute:
+
++------------------------------+
+  @Attribute(localName="name", type=AttributeType.ATTRIBUTE_VALUE_TEMPLATE)
+  public static String getName( JXPathContext context );
++------------------------------+
+
+  And the variable $var defined as "value" in the context, will resolve to the following values:
+
+*----------------------+----------------------------+
+| <<Attribute>>        | <<getName(JXPathContext)>> |
+*----------------------+----------------------------+
+| name="name"          | "name"                     |
+*----------------------+----------------------------+
+| name="$var"          | "$var"                     |
+*----------------------+----------------------------+
+| name="\{$var\}"        | "value"                    |
+*----------------------+----------------------------+
+| name="name \{$var\}"   | "name value"               |
+*----------------------+----------------------------+
+| name="name \{\{$var\}\}" | "name \{$var\}"              |
+*----------------------+----------------------------+
+
+** AttributeType.JXPATH_ITERATE_POINTERS
+
+
+** AttributeType.JXPATH_POINTER
+
+
+** AttributeType.JXPATH_SELECT_SINGLE_NODE
+
+
+** AttributeType.JXPATH_VALUE
+
+
+** AttributeType.LITERAL
+
+
+** AttributeType.QNAME
+
+** JXPATH_VALUE
+
+** LITERAL
+
+** ATTRIBUTE_VALUE_TEMPLATE
+
+* Defining exceptions that may be thrown.
+
+* Defining a default value.
+
+* Defining namespaces for the default value.

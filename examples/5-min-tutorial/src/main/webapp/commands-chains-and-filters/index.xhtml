@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:servlet="http://www.xchain.org/servlet/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:tutorial="http://www.xchain.org/tutorial"
+  xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <xchain:chain xchain:name="servlet:get">
+    <xchain:variable name="do-if" select="false()"/>
+    <sax:pipeline>
+      <sax:command-source>
+        <jsl:template>
+          <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+            <head>
+              <title>Commands, Chains, and Filters</title>
+              <link rel="stylesheet" type="text/css" href="./trace.css" media="screen, projection" />
+            </head>
+            <body>
+              <div>Commands, Chains, and Filters Tutorial</div>
+              <div>
+                <p>In this tutorail, we will examine the basic building blocks of XChain files, commands, chains, and filters.</p>
+
+                <p>Commands are pieces of java code that are bound to an xml element.  The command cannot have any nested tags, but
+                it can have attributes that are used to pass values into the command.  An example of command is the &lt;xchain:varialbe&gt;
+                command.  It is used to bind new values into the context.  Open the source for this example and remove the comments under
+                this paragraph.  You should see some new text below.</p>
+
+                <!--
+                  <xchain:variable name="tutorial:command" select="true()"/>
+                  -->
+
+                <xchain:if test="$tutorial:command">
+                  <p>Excelent, you have now added a command the the execution of this page.</p>
+                </xchain:if>
+
+                <p>Chains are commands that can have other commands nested in them.  A chain controls the flow of execution for its children,
+                so they can execute code before and after their children execute, conditionally execute their children, or even execute their
+                children repeatedly to perform loops.  An example of a chain in the core package is the &lt;iterate&gt; chain.  It executes
+                it's children for each element in the collection selected by it's select attribute.  Remove the comments under this paragraph.
+                You should see a listing below.</p>
+
+                <!--
+                <xchain:variable name="tutorial:list" select="java.util.ArrayList.new()"/>
+                <xchain:eval expression="add($tutorial:list, 'You ')"/>
+                <xchain:eval expression="add($tutorial:list, 'just added a ')"/>
+                <xchain:eval expression="add($tutorial:list, 'chain to this ')"/>
+                <xchain:eval expression="add($tutorial:list, 'page!')"/>
+
+                <p>
+                <xchain:iterate select="$tutorial:list" variable="tutorial:item">
+                  <jsl:value-of select="$tutorial:item"/>
+                </xchain:iterate>
+                </p>
+                 -->
+
+                <p>Filters are commands or chains that define a piece of clean up work that is performed after the chain executes.  When a filter
+                is nested in a chain, the chain executes all of its children, then executes the filters in reverse order.  When a chain is also a
+                filter, then it executes all of its children, but defers calling its children's clean up code until its own clean up code is called.
+                To help you understand this interaction, this tutorial has a set of execution tracing commands defined.</p>
+
+                <p>These are the commands we will be using to explore filtering:</p>
+                <dl>
+                  <dt>&lt;tutorial:trace-command name="name"/&gt;</dt>
+                  <dd>A command that traces its execution.</dd>
+                  <dt>&lt;tutorial:trace-chain name="name"&gt; ... &lt;/tutorial:trace-chain/&gt;</dt>
+                  <dd>A chain that traces the start and end of its execution.</dd>
+                  <dt>&lt;tutorial:trace-filter name="name"&gt; ... &lt;tutorial:trace-filter&gt;</dt>
+                  <dd>A filtering chain that traces the start and end of its execution and post processing.</dd>
+                  <dt>&lt;tutorial:trace-result ... &lt;tutorial:trace-result&gt;</dt>
+                  <dd>A chain that shows the results from the commands nested inside of it.</dd>
+                </dl>
+                <p>Remove the different commented
+                sections below this paragraph to see examples of commands, chains, and filters executing in combination.</p>
+
+                <tutorial:trace-chain name="chain-one">
+                <tutorial:trace-chain name="chain-two">
+                <tutorial:trace-filter name="chain-three"/>
+                <xchain:handled test="true()"/>
+                <tutorial:trace-filter name="chain-four"/>
+                </tutorial:trace-chain>
+                </tutorial:trace-chain>
+
+                <!--
+                <tutorial:error-handler>
+                  <tutorial:
+                </tutorial:error-handler>
+                  -->
+
+                <p>This concludes the tutorial on commands, chains and filters.</p>
+              </div>
+            </body>
+          </html>
+        </jsl:template>
+      </sax:command-source>
+      <sax:serializer method="'xhtml'"/>
+      <servlet:result/>
+    </sax:pipeline>
+  </xchain:chain>
+</xchain:catalog>
+

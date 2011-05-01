@@ -1,0 +1,43 @@
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.xchain</groupId>
+    <artifactId>xchain</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>org.xchain</groupId>
+  <artifactId>xchain-site</artifactId>
+
+  <name>XChain Website</name>
+  <url>http://www.xchain.org/</url>
+
+  <scm>
+    <connection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/site/</connection>
+    <developerConnection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/site/</developerConnection>
+    <url>http://svn.meltmedia.com/repos/xchain/trunk/site/</url>
+  </scm>
+
+  <distributionManagement>
+    <site>
+      <id>xchain.site</id>
+      <url>scp://www.xchain.org/home/xchain/www/www.xchain.org/</url>
+    </site>
+  </distributionManagement>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.8.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
+
+</project>

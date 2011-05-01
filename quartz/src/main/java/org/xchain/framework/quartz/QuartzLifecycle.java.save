@@ -1,0 +1,253 @@
+package org.xchain.framework.quartz;
+
+import java.net.URL;
+import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.xml.namespace.QName;
+
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+import org.xchain.framework.lifecycle.LifecycleContext;
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleException;
+import org.xchain.framework.lifecycle.StartStep;
+import org.xchain.framework.lifecycle.StopStep;
+import org.xchain.framework.lifecycle.ConfigDocumentContext;
+
+import org.quartz.Scheduler;
+import org.quartz.StdSchedulerFactory;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.Pointer;
+
+/**
+ * <p>A lifecycle class that starts quartz, if the quartz APIs and configuration file are available on the
+ * class path.</p>
+ */
+@LifecycleClass(uri=Constants.LIFECYCLE_URI)
+public class QuartzLifecycle {
+  public static final Log log = LogFactory.getLog( QuartzLifecycle.class );
+
+  private static QuartzLifecycle instance = new QuartzLifecycle();
+  public  static final String DEFAULT_QUARTZ_PROPERTIES = "quartz.properties";
+  public  static final String DEFAULT_QUARTZ_JOB_CONFIG = "quartz-jobs.xml";
+
+  /**
+   * <p>Returns the singleton instance of the quartz lifecycle.</p>
+   */
+  @LifecycleAccessor
+  public static QuartzLifecycle getInstance() { return instance; }
+
+  private boolean disabled = false;
+  //private Map<QName, Scheduler> schedulerMap = new HashMap<QName, Scheduler>();
+  private Scheduler scheduler = null;
+
+  /**
+   * <p>Prevents multiple instances of this lifecycle from being created.</p>
+   */
+  private QuartzLifecycle() { }
+
+  /**
+   * <p>Configures the quartz lifecycle.  This method will take several different approches to configuring the lifecycle:</p>
+   * <ol>
+   *   <li>If the quartz apis cannot be found, then the QuartzLifecycle is set to disabled and this method returns.</li>
+   *   <li>If the XChain config resource (META-INF/xchain-config.xml) contains the {http://xchain.org/quartz-config}disabled element and it has a value of "true",
+   *     then the disabled flag is set to true and this method returns.</li>
+   *   <li>If the XChain config resource does not contain any {http://xchain.org/quartz-config}scheduler elements, then the default scheduler is created.</li>
+   *   <li>If the XChain config resource does contain one or more {http://xchain.org/quartz-config}scheduler elements, then schedulers are loaded for each element.</li>
+   * </ol>
+   *
+   * @param context the lifecycle context.
+   * @param configDocContext the context of the configuration document.
+   */
+  @StartStep(localName="config", after={"{http://www.xchain.org/framework/lifecycle}config"}, xmlns={"xmlns:config='http://www.xchain.org/framework/quartz-config'"})
+  public void startConfig(LifecycleContext context, ConfigDocumentContext configDocContext)
+    throws LifecycleException
+  {
+    // if there are no quartz apis defined, then we will disable this service.
+    if( !quartzApisExist() ) {
+      disabled = true;
+      if( log.isDebugEnabled() ) {
+        log.debug("The quartz apis were not found, so the quartz lifecycle has been disabled.");
+      }
+      return;
+    }
+
+    // test to see if the quartz lifecycle has been disabled.
+    Boolean disabledValue = getDisabled( configDocContext );
+    disabled = disabledValue!=null?disabledValue.booleanValue():false;
+
+    // if this lifecycle has been explicitly disabled, then terminate.
+    if( disabled ) {
+      if( log.isInfoEnabled() ) {
+        log.info("The quartz lifecycle has been disabled in the configuration file.");
+      }
+      return;
+    }
+
+    // create the scheduler factory.
+    StdSchedulerFactory factory = null;
+    URL defaultQuartzConfig = Thread.currentThread().getContextClassLoader().getResource(DEFAULT_QUARTZ_PROPERTIES);
+    if( defaultQuartzConfig != null ) {
+      Properties properties = loadProperties(defaultQuartzConfig);
+      factory = new StdSchedulerFactory(properties);
+    }
+    else {
+      factory = new StdSchedulerFactory();
+    }
+
+    factory.getScheduler();
+
+    // if there is a quartz-job.xml file, then load it into the scheduler.
+    InputStream defaultQuartzJobConfig = Thread.currentThread().getContextClassLoader().getResourceAsStream(DEFAULT_QUARTZ_JOBS);
+    URL defaultQuartzJobConfig = Thread.currentThread().getContextClassLoader().getResource(DEFAULT_QUARTZ_JOBS);
+    if( defaultQuartzJobConfig != null ) {
+      try {
+        xmlProcessor.processStream(defaultQuartzJobConfig), DEFAULT_QUARTZ_JOBS);
+        xmlProcessor.scheduleJobs(xmlProcessor.getScheduledJobs(), scheduler, true);
+      }
+      catch( Exception e ) {
+        throw new LifecycleException("Could not scheduler jobs from '"+DEFAULT_QUARTZ_JOBS+"'.");
+      }
+    }
+
+    /*
+     NOTE: This code will be supported in future versions of the QuartzLifecycle.  Due to project time constraints, only the default scheduler will
+     be supported for the time being.
+
+    // the schedulers are defined in {http://xchain.org/quartz-config}scheduler elements.
+    Iterator<Pointer> schedulerPointers = (Iterator<Pointer>)configDocContext.iteratePointers("/*/config:scheduler");
+
+    // if no schedulers are defined, then we should do the default configuration.
+    if( !schedulerPointers.hasNext() ) {
+       Scheduler defaultScheduler = null;
+
+       // get the default quartz configuration.
+       URL defaultQuartzConfig = Thread.currentThread().getContextClassLoader().getResource(DEFAULT_QUARTZ_PROPERTIES);
+
+       // is there is not a default quartz configuration and the quartz disabled element was not defined, then we will disable this service.
+       if( defaultQuartzConfig == null && disabledValue == null ) {
+         disabled = true;
+         return;
+       }
+       else if( defaultQuartzConfig == null ) {
+         // create a default quartz scheduler.
+         Scheduler defaultScheduler = new StdSchedulerFactory();
+       }
+       else {
+
+       }
+    }
+    // if there are schedulers defined, then we will use them to build the set of schedulers.
+    else {
+      while( schedulerPointers.hasNext() ) {
+        Pointer schedulerPointer = schedulerPointers.next();
+        JXPathContext scheduler = configDocContext.getRelativeContext(schedulerPointer);
+        String schedulerName = (String)configDocContext.getValue("@name", String.class);
+        String configFile = (String)configDocContext.getValue("config:config-file", String.class);
+        String jobFile = (String)configDocContext.getValue("config:job-file", String.class);
+
+        if( schedulerName == null ) {
+          throw new LifecycleException("The element "+schedulerPointer.asPath()+" is missing the name attribute.");
+        }
+
+        // resolve the name of the scheduler.
+        QName schedulerQName = new QName(schedulerName);
+
+        // add this information to a set of scheduler configuration objects.
+      }
+    }
+    */
+  }
+
+  /**
+   * <p>Unconfigures the quartz lifecycle.  The map of schedulers is cleared and the disabled flag is set back to false.</p>
+   */
+  @StopStep(localName="config")
+  public void stopConfig()
+  {
+    //schedulerMap.clear();
+    scheduler = null;
+    disabled = false;
+  }
+
+  /**
+   * <p>Starts all of the schedulers registered with the quartz lifecycle.</p>
+   */
+  @StartStep(localName="run")
+  public void startSchedulers( LifecycleContext context ) 
+  {
+    try {
+      for( Map.Entry<QName, Scheduler> schedulerEntry : schedulerMap.entrySet() ) {
+        try {
+          if( !schedulerEntry.getValue().isStarted() ) {
+            schedulerEntry.getValue().start();
+          }
+        }
+        catch( Exception e ) {
+          throw new LifecycleException("Could not start scheduler "+schedulerEntry.getKey()+"' due to an exception.", e);
+        }
+      }
+    }
+    catch( LifecycleException e ) {
+      shutdownAllSchedulers();
+    }
+  }
+
+  /**
+   * <p>Stops all of the schedulers registered with the quartz lifecycle.</p>
+   */
+  @StopStep(localName="run")
+  public void stopSchedulers( LifecycleContext context )
+  {
+    shutdownAllSchedulers();
+  }
+
+  private void shutdownAllSchedulers()
+  {
+    // if there was an error, then we need to bring all of the schedulers back down.
+    for( Map.Entry<QName, Scheduler> schedulerEntry : schedulerMap.entrySet() ) {
+      try {
+        if( schedulerEntry.getValue().isStarted() ) {
+          schedulerEntry.getValue().shutdown(true);
+        }
+      }
+      catch( Exception ignore ) {
+        if( log.isInfoEnabled() ) {
+          log.info("Failed to shut down scheduler "+schedulerEntry.getKey()+" due to an exception.", ignore);
+        }
+      }
+    }
+  }
+
+  /**
+   * <p>Tests for the existance of the Quartz APIs.  If the class "org.quartz.Scheduler" can be loaded from the 
+   * context class loader, then this method returns true, otherwise it returns false.</p>
+   *
+   * @return true if the Quartz APIs are on the context class path, false otherwise.
+   */
+  private boolean quartzApisExist()
+  {
+    try {
+      Thread.currentThread().getContextClassLoader().loadClass("org.quartz.Scheduler");
+      return true;
+    }
+    catch( Exception e ) {
+      return false;
+    }
+  }
+
+  protected static Boolean getDisabled( ConfigDocumentContext context )
+  {
+    return (Boolean)context.getValue("/*/config:disabled", Boolean.class);
+  }
+
+  protected static Iterator<Pointer> getSchedulerPointerIterator( ConfigDocumentContext context )
+  {
+    return (Iterator<Pointer>)context.iteratePointers("*/config:scheduler");
+  }
+}

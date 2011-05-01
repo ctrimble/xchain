@@ -1,0 +1,431 @@
+~~
+~~    Copyright 2011 meltmedia
+~~
+~~    Licensed under the Apache License, Version 2.0 (the "License");
+~~    you may not use this file except in compliance with the License.
+~~    You may obtain a copy of the License at
+~~
+~~        http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~    Unless required by applicable law or agreed to in writing, software
+~~    distributed under the License is distributed on an "AS IS" BASIS,
+~~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~    See the License for the specific language governing permissions and
+~~    limitations under the License.
+~~
+
+ ------
+ Jsl Namespace
+ ------
+ Mike Moulton
+ ------
+ 16 Feb 2008
+ ------
+
+~~ NOTE: For help with the syntax of this file, see:
+~~ http://maven.apache.org/doxia/references/apt-format.html
+
+
+{Jsl Namespace}
+
+  Namespace URI: <<http://www.xchain.org/jsl/1.0>>
+
+  Description of what the jsl namespace is.
+
+{Available Commands}
+
+* {attribute}
+
+  The \<jsl:attribute/\> element adds a dynamic element on the last output element.  The attribute element must come before any text nodes or child elements, otherwise the attribute
+  will be silently ignored.  Any prefix mappings defined in the scope of the attribute element will also be defined on the output element.  It is a fatal error to define an attribute
+  element that has incompatable prefix mappings with the element attribute that it is being assigned to.
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <jsl:attribute name="'example:attribute'" xmlns:example="http://example">value</jsl:attribute>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  produces this output:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0"
+    xmlns:example="http://example"
+
+    example:attribute="value"/>
++--------------------------+
+
+  A dynamic value can be assigned to an attribute by using the \<jsl:value-of/\> element inside of the attribute.
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <jsl:attribute name="'example:attribute'" xmlns:example="http://example"><jsl:value-of select="'dynamic-value'"/></jsl:attribute>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  produces this output:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0"
+    xmlns:example="http://example"
+
+    example:attribute="dynamic-value"/>
++--------------------------+
+
+
+* {comment}
+
+  \<jsl:comment/\> element are used to produce comments in the output document.  Any text produced inside the comment element will be added to the comment, but element results will be ignored.
+  This template:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <jsl:comment>This is a comment.</jsl:comment>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  produces this output:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0">
+    <!--This is a comment.-->
+  </element>
++--------------------------+
+
+  The \<jsl:comment/\> element can be used with the <jsl:text/> and <jsl:value-of/> elements to dynamically create output.
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <jsl:comment><jsl:text>This</jsl:text> is a <jsl:value-of select="'comment.'"/></jsl:comment>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  produces this output:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0">
+    <!--This is a comment.-->
+  </element>
++--------------------------+
+
+
+* {element}
+
+  The \<jsl:element/\> command can be used to produce dynamic element nodes in the result document.  The name of the element is specified by the required name attribute and the
+  namespace can be specified by the optional namespace attribute.  The result of the name attribute can be either a qName, using a prefix from the current namespace context, or
+  it can be a local name.  If the namespace attribute is specified, then a prefix for that attribute must be defined in the current namespace context for the element.
+
+  Here is an example of a \<jsl:element/\> element that specifies its name as a prefixed qName:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <jsl:element name="'example:element'" xmlns:example="http://example"/>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  Which produces the output document:
+
++--------------------------+
+  <example:element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0"
+    xmlns:example="http://example"/>
++--------------------------+
+
+  In this example, the \<jsl:element/\> element has both a name attribute and a namespace attribute:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <jsl:element name="'element'" namespace="'http://example'" xmlns:example="http://example"/>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  Which produces the output document:
+
++--------------------------+
+  <example:element 
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0"
+    xmlns:example="http://example"/>
++--------------------------+
+
+* {template}
+
+  A \<jsl:template/\> element marks the boundaries of a template.  Inside of a template, any element that is not in an xchain command namespace will be compiled into a command that sends sax events to a <sax:pipeline/> element.  The output elements can be mixed with standard xchain commands to create dynamic result documents.
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <xchain:if test="false()">
+              <never/>
+            </xchain:if>
+            </xchain:if test="true()">
+              <always/>
+            </xchain:if>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  Produces this output:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0">
+    <always/>
+  </element>
++--------------------------+
+
+  Attributes of output elements support attribute value templates, so that they can produce dynamic output:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element true="{true()}" false="{false()}" escaped="{{escaped}}"/>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+ 
+</xchain:catalog>
++--------------------------+
+
+  Produces this output:
+
++--------------------------+
+  <element
+     xmlns:sax="http://www.xchain.org/sax/1.0"
+     xmlns:jsl="http://www.xchain.org/jsl/1.0"
+     xmlns:xchain="http://www.xchain.org/core/1.0"
+ 
+     true="true"
+     false="false"
+     escaped="{escaped}"/>
++--------------------------+
+
+* {text}
+
+  A \<jsl:text/\> element defines text to send to the output document.  It is useful when you want to control the exact text that will be sent for character nodes.
+  This example demonstrates the difference between a text node that is in an output element and a text node that is created with a \<jsl:text/\> element:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <element>
+            <raw-text>
+              This is some text.
+            </raw-text>
+            <jsl-text>
+              <jsl:text>This is some text.</jsl:text>
+            </jsl-text>
+          </element>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+
+
+  This is the output from the previous jsl template.  Notice the difference in whitespace between the raw-text element and the jsl-element:
+
++--------------------------+
+  <element
+    xmlns:sax="http://www.xchain.org/sax/1.0"
+    xmlns:jsl="http://www.xchain.org/jsl/1.0"
+    xmlns:xchain="http://www.xchain.org/core/1.0">
+    <raw-text>
+              This is some text.
+    </raw-text>
+    <jsl-text>This is some text.</jsl-text>
+  </element>
++--------------------------+
+
+
+* {value-of}
+
+  Description here of the value-of command. Here is an example usage of the value-of command:
+
++--------------------------+
+<xchain:catalog
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:jsl="http://www.xchain.org/jsl/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="my-chain-name">
+    <sax:pipeline>
+      <sax:command-source>
+
+        <jsl:template>
+          <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+              <title>Testing</title>
+            </head>
+            <body>
+              <h1>The value of an jxpath expression: <jsl:value-of select="$my-value"/></h1>
+            </body>
+          </html>
+        </jsl:template>
+
+      </sax:command-source>
+      <sax:result system-id="'file://path/to/output.html'"/>
+    </sax:pipeline>
+  </xchain:chain>
+
+</xchain:catalog>
++--------------------------+

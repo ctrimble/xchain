@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<project name="XChain Framework">
+
+  <bannerLeft>
+    <name>XChain Framework</name>
+    <href>http://www.xchains.org</href>
+  </bannerLeft>
+
+  <publishDate format="MMM dd yyyy" />
+
+  <skin>
+    <groupId>org.xchain.maven</groupId>
+    <artifactId>xchain-skin</artifactId>
+    <version>0.3.0-SNAPSHOT</version>
+  </skin>
+
+  <body>
+    <breadcrumbs>
+      <item name="XChain Framework" href="http://www.xchain.org"/>
+    </breadcrumbs>
+
+    <menu name="Overview">
+      <item name="Introduction" href="/index.html"/>
+      <item name="FAQ" href="/guides/faq.html"/>
+    </menu>
+
+    <menu name="Use XChain">
+      <item name="Getting Started" href="/guides/index.html"/>
+      <item name="5-Minute Tutorials" href="/guides/tutorial.html"/>
+    </menu>
+
+    <menu name="Modules">
+      <item name="Core" href="/core/index.html"/>
+      <item name="Container" href="/container/index.html"/>
+      <item name="Hibernate" href="/hibernate/index.html"/>
+    </menu>
+
+    <menu name="Community">
+      <item name="Get Involved" href="/community/index.html" />
+      <item name="Forums" href="http://forum.xchain.org"/>
+    </menu>
+
+    <menu name="Resources">
+      <item name="Issue Tracking" href="http://jira.xchain.org" />
+      <item name="Source Repository" href="/source-repository.html"/>
+      <item name="The Team" href="/team-list.html" />
+      <item name="License" href="/license.html" />
+    </menu>
+
+  </body>
+</project>

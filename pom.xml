@@ -1,0 +1,473 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.xchain</groupId>
+  <artifactId>xchain</artifactId>
+  <version>0.5.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>XChain Framework</name>
+
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>XChain Framework</name>
+    <url>http://www.xchain.org</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>ctrimble</id>
+      <name>Christian Trimble</name>
+      <email>christian at meltmedia.com</email>
+      <organization>meltmedia</organization>
+      <roles>
+        <role>Lead Architect</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+    <developer>
+      <id>mmoulton</id>
+      <name>Mike Moulton</name>
+      <email>mike at meltmedia.com</email>
+      <organization>meltmedia</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+    <developer>
+      <id>dtackett</id>
+      <name>Devon Tackett</name>
+      <email>devon at meltmedia.com</email>
+      <organization>meltmedia</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+    <developer>
+      <id>jtrimble</id>
+      <name>John Trimble</name>
+      <email>john at meltmedia.com</email>
+      <organization>meltmedia</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+    <developer>
+      <id>jkennedy</id>
+      <name>Josh Kennedy</name>
+      <email>josh at meltmedia.com</email>
+      <organization>meltmedia</organization>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/</connection>
+    <developerConnection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/</developerConnection>
+    <url>http://svn.meltmedia.com/repos/xchain/trunk/</url>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <copyright.owner>meltmedia</copyright.owner>
+    <copyright.year>2011</copyright.year>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Container -->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.4</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.transaction</groupId>
+        <artifactId>jta</artifactId>
+        <version>1.0.1B</version>
+      </dependency>
+      <dependency>
+        <groupId>shrinksafe</groupId>
+        <artifactId>shrinksafe</artifactId>
+        <version>1.7.0-meltmedia</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock-junit4</artifactId>
+        <version>2.4.0</version>
+      </dependency>
+      <!-- Core -->
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-digester</groupId>
+        <artifactId>commons-digester</artifactId>
+        <version>1.8</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-jxpath</groupId>
+        <artifactId>commons-jxpath</artifactId>
+        <version>1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>javassist</groupId>
+        <artifactId>javassist</artifactId>
+        <version>3.9.0.GA</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.4</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.joost</groupId>
+        <artifactId>joost</artifactId>
+        <version>20081012</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.saxon</groupId>
+        <artifactId>saxonb</artifactId>
+        <version>9.1.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>serializer</artifactId>
+        <version>2.7.1</version>
+      </dependency>
+      <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>xalan</artifactId>
+        <version>2.7.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-jci-core</artifactId>
+        <version>1.1-MELTMEDIA-748307</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>1.8.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-jci-eclipse</artifactId>
+        <version>1.1-MELTMEDIA-748307</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>jtidy</artifactId>
+        <version>r8-20060801</version>
+      </dependency>
+      <dependency>
+        <groupId>net.sf.opencsv</groupId>
+        <artifactId>opencsv</artifactId>
+        <version>1.8</version>
+      </dependency>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.core</artifactId>
+        <version>4.2.0</version>
+      </dependency>
+      <!-- Used for classpath scanning code. -->
+      <dependency>
+        <groupId>org.jboss</groupId>
+        <artifactId>jboss-vfs</artifactId>
+        <version>2.1.0.GA</version>
+      </dependency>
+      <!-- Hibernate -->
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate</artifactId>
+        <version>3.2.6.ga</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-annotations</artifactId>
+        <version>3.3.1.ga</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-commons-annotations</artifactId>
+        <version>3.3.0.ga</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>3.0.0.ga</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-search</artifactId>
+        <version>3.0.0.GA</version>
+      </dependency>
+      <dependency>
+        <groupId>hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>1.8.0.7</version>
+      </dependency>
+      <!-- Quartz -->
+      <dependency>
+        <groupId>org.opensymphony.quartz</groupId>
+        <artifactId>quartz</artifactId>
+        <version>1.6.5</version>
+      </dependency>
+      <!-- Logging Dependencies -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.6</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>0.9.15</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>1.5.6</version>
+      </dependency>
+      <!--
+      This is a fake dependency to remove commons-logging from all transitive dependencies
+      as SLF4J is wrapping the commons-logging API's for us.
+      See: http://day-to-day-stuff.blogspot.com/2007/10/announcement-version-99-does-not-exist.html
+      -->
+      <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>99.0-does-not-exist</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+
+  <repositories>
+    <repository>
+      <id>meltmedia.nexus-thirdparty</id>
+      <name>meltmedia Third Party Repository [m2]</name>
+      <url>http://nexus.meltdev.com/content/repositories/thirdparty/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>jboss</id>
+      <name>JBoss Repository [m2]</name>
+      <url>http://repository.jboss.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <distributionManagement>
+    <repository>
+      <id>meltmedia-releases</id>
+      <name>meltmedia Release Repository [m2]</name>
+      <url>http://nexus.meltdev.com/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>meltmedia-snapshots</id>
+      <name>meltmedia Snapshot Repository [m2]</name>
+      <url>http://nexus.meltdev.com/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.5</source>
+            <target>1.5</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.5</version>
+          <configuration>
+            <links>
+              <link>http://java.sun.com/j2se/1.4.2/docs/api</link>
+              <link>http://java.sun.com/j2ee/1.4/docs/api</link>
+              <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+              <link>http://commons.apache.org/collections/apidocs/</link>
+              <link>http://commons.apache.org/jxpath/apidocs/</link>
+              <link>http://commons.apache.org/digester/apidocs/</link>
+              <link>http://junit.sourceforge.net/javadoc/</link>
+              <link>http://www.slf4j.org/apidocs/index.html</link>
+              <link>http://logback.qos.ch/apidocs/index.html</link>
+            </links>
+          </configuration>
+          <!-- 
+          <dependencies>
+            <dependency>
+              <groupId>org.xchain</groupId>
+              <artifactId>xchain-core</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+           -->
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>com.mycila.maven-license-plugin</groupId>
+          <artifactId>maven-license-plugin</artifactId>
+          <version>1.9.0</version>
+          <configuration>
+            <header>src/etc/header.txt</header>
+            <properties>
+              <copyright.year>${copyright.year}</copyright.year>
+              <copyright.owner>${copyright.owner}</copyright.owner>
+            </properties>
+            <mapping>
+              <xchain>XML_STYLE</xchain>
+            </mapping>
+            <dryRun>false</dryRun>
+            <goalPrefix>license</goalPrefix>
+            <strictCheck>true</strictCheck>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>2.1.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+    <plugin>
+      <groupId>com.mycila.maven-license-plugin</groupId>
+      <artifactId>maven-license-plugin</artifactId>
+      <version>1.9.0</version>
+    </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.8.1</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <detectJavaApiLink>false</detectJavaApiLink>
+          <docfilessubdirs>true</docfilessubdirs>
+         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.2</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <targetJdk>${java.target.version}</targetJdk>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.8.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <profiles>
+    <profile>
+      <id>default-tools.jar</id>
+      <activation>
+        <property>
+          <name>java.vendor</name>
+          <value>Sun Microsystems Inc.</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun</groupId>
+          <artifactId>tools</artifactId>
+          <version>1.4.2</version>
+          <scope>system</scope>
+          <systemPath>${java.home}/../lib/tools.jar</systemPath>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
+  <modules>
+    <module>skin</module>
+    <module>core</module>
+    <module>hibernate</module>
+    <module>container</module>
+    <module>quartz</module>
+    <module>tools/execute-plugin</module>
+  </modules>
+
+</project>

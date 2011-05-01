@@ -1,0 +1,339 @@
+~~
+~~    Copyright 2011 meltmedia
+~~
+~~    Licensed under the Apache License, Version 2.0 (the "License");
+~~    you may not use this file except in compliance with the License.
+~~    You may obtain a copy of the License at
+~~
+~~        http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~    Unless required by applicable law or agreed to in writing, software
+~~    distributed under the License is distributed on an "AS IS" BASIS,
+~~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~    See the License for the specific language governing permissions and
+~~    limitations under the License.
+~~
+
+ ------
+ Core Framework
+ ------
+ Christian Trimble
+ ------
+ 1 December 2008
+ ------
+
+~~ NOTE: For help with the syntax of this file, see:
+~~ http://maven.apache.org/guides/mini/guide-apt-format.html
+
+XChain Lifecycle
+
+* Current problems.
+
+  The current XChain Lifecycle implementation has two main problems.  This document lays out a plan for the new lifecycle structure that will solve these problems and make lifecycle definitions mush simpler.
+
+  The first problem is the extra class that has to be defined when creating a lifecycle step.  Instead of just annotating a method, a seperate class must be defined for each lifecycle step that is required.
+
+  Second, the annotations for ordering lifecycle steps is very confusing.  It is hard to know what order the steps will be executed in by just reading the annotations.
+
+* Allowing lifecycle steps to be defined directly on a lifecycle class.
+
+  To reduce the number of classes that are required to add a lifecycle step, lifecycle classes will be defined as singleton classes and methods will be annotated as start and stop lifecycle steps.  Using this method, many lifecycle steps will be able to be defined in a single class file.
+
+** Defining the lifecycle class.
+
+  A lifecycle class is defined as a POJO with the org.xchain.framework.lifecycle.LifecycleClass annotation.  The annotation defines the uri for all of the lifecycle steps that it contains.  If the class is implemented as a singleton instance, then the class must have a static method annotated with the org.xchain.framework.lifecycle.LifecycleAccessor annotation that returns an instance of the class.
+
+  This is an example of a Lifecycle POJO defined as a singleton:
+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+
+@LifecycleClass(uri="http://www.xchain.org/example")
+public final class ExampleLifecycle
+{
+  private static ExampleLifecycle instance;
+
+  /**
+   * Returns the lifecycle singleton.
+   */
+  @LifecycleAccessor
+  public static ExampleLifecycle getInstance()
+  {
+    return instance;
+  }
+
+  private ExampleLifecycle()
+  {
+
+  }
+
+}
++---------------+
+
+  This is an example of a definition of a lifecycle as a set of static methods:
+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+
+@LifecycleClass(uri="http://www.xchain.org/example")
+public final class ExampleLifecycle
+{
+  private ExampleLifecycle()
+  {
+    // this never gets called.
+  }
+}
++---------------+
+
+  Now that we have a simple annotation based  method for defining lifecycle classes, we need to add annotations for defining lifecycle steps.
+
+** Defining lifecycle steps.
+
+  Lifecycle steps can be defined on the lifecycle classes using static or instance methods and annotations.  For steps that are executed when the lifecyle starts, the method needs to be annotated with the org.xchain.framework.lifecycle.StartStep annotation.  For steps that are executed when the lifecycle stops, the method needs to be annotated with the org.xchain.framework.lifecycle.StopStep annotation.  If a start step and a stop step share the same name, then the two steps are linked as the same step.  It is an error to define two or more start steps with the same name or two or more end steps with the same name.
+
+  This is an example of defining lifecycle steps on an instance based lifecycle class:
+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+import org.xchain.framework.lifecycle.StartStep;
+import org.xchain.framework.lifecycle.StopStep;
+
+@LifecycleClass(uri="http://www.xchain.org/example")
+public final class ExampleLifecycle
+{
+  private static ExampleLifecycle instance;
+
+  /**
+   * Returns the lifecycle singleton.
+   */
+  @LifecycleAccessor
+  public static ExampleLifecycle getInstance()
+  {
+    return instance;
+  }
+
+  private ExampleLifecycle()
+  {
+
+  }
+
+  @StartStep(localName="step1")
+  public void startMethod1( LifecycleContext context )
+    throws Exception
+  {
+
+  }
+
+  @StartStep(localName="step2")
+  public void startMethod2( LifecycleContext context )
+    throws Exception
+  {
+
+  }
+
+  @StopStep(localName="step1")
+  public void endMethod1( LifecycleContext context )
+  {
+
+  }
+}
++---------------+
+
+  This is an example of defining lifecycle steps on a static lifecycle class:
+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+
+@LifecycleClass(uri="http://www.xchain.org/example")
+public final class ExampleLifecycle
+{
+  private ExampleLifecycle()
+  {
+    // this never gets called.
+  }
+
+  @StartStep(localName="step1")
+  public static void startMethod1( LifecycleContext context )
+    throws Exception
+  {
+
+  }
+
+  @StartStep(localName="step2")
+  public static void startMethod2( LifecycleContext context )
+    throws Exception
+  {
+
+  }
+
+  @StopStep(localName="step1")
+  public statac void endMethod1( LifecycleContext context )
+  {
+
+  }
+}
++---------------+
+
+  In the next section, we will define new annotations that will clearly and simply define the order of lifecycle steps.
+
+* Defining the order of lifecycle steps.
+
+  Lifecycle steps often need to be ordered, so that the developer can know that one phase of the lifecycle has ended before the next phase of the lifecycle begins.  In the current implementation of XChains, this is defined using the DependencyMapping annotation.  This annotation has caused some confusion, so this section will define a new set of annotations for ordering lifecycle steps.
+
+** StartStep before and after properties.
+
+  The StartStep annotation defines two properties for specifying ordering.  The before property defines the steps that this step will execute before and the after property defines the steps that this step will execute after.  The values of these properties are string arrays where the values in the arrays are the qnames of other steps.  If any of the qnames do not include a namespace uri, then that qname will be in the same namespace uri as the lifecycle class.
+
+  Here is a simple example of using lifecycle ordering between two lifecycle class.
+  
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+import org.xchain.framework.lifecycle.StartStep;
+import org.xchain.framework.lifecycle.StopStep;
+
+@LifecycleClass(uri="http://www.xchain.org/example1")
+public final class Example1Lifecycle
+{
+  private static Example1Lifecycle instance;
+
+  @LifecycleAccessor
+  public static Example1Lifecycle getInstance() { return instance; }
+
+  private ExampleLifecycle() { }
+
+  @StartStep(localName="step1", before={"{http://www.xchain.org/example2}step1"})
+  public void startMethod1( LifecycleContext context )
+  {
+    System.out.println("START:{http://www.xchain.org/example1}step1");
+  }
+
+  @StopStep(localName="step1", before={"http://www.xchain.org/example2}step2"})
+  public void endMethod1( LifecycleContext context )
+  {
+    System.out.println("STOP:{http://www.xchain.org/example1}step1");
+  }
+
+  @StartStep(localName="step2", after={"step1"})
+  public void startMethod2( LifecycleContext context )
+    throws Exception
+  {
+    System.out.println("START:{http://www.xchain.org/example1}step2");
+  }
+}
++---------------+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+import org.xchain.framework.lifecycle.StartStep;
+import org.xchain.framework.lifecycle.StopStep;
+
+@LifecycleClass(uri="http://www.xchain.org/example2")
+public final class Example2Lifecycle
+{
+  private static Example2Lifecycle instance;
+
+  @LifecycleAccessor
+  public static Example2Lifecycle getInstance() { return instance; }
+
+  private Example2Lifecycle() { }
+
+  @StartStep(localName="step1")
+  public void startMethod1( LifecycleContext context )
+    throws Exception
+  {
+    System.out.println("START:{http://www.xchain.org/example2}step1");
+  }
+
+  @StopStep(localName="step1"})
+  public void endMethod1( LifecycleContext context )
+  {
+    System.out.println("STOP:{http://www.xchain.org/example2}step1");
+  }
+
+  @StartStep(localName="step2")
+  public void startMethod2( LifecycleContext context )
+    throws Exception
+  {
+    System.out.println("START:{http://www.xchain.org/example2}step2");
+  }
+}
++---------------+
+
+  When the lifecycle starts, the following lines will be printed out:
+
++---------------+
+START:{http://www.xchain.org/example2}step2
+START:{http://www.xchain.org/example1}step1
+START:{http://www.xchain.org/example1}step2
+START:{http://www.xchain.org/example2}step1
++---------------+
+
+  And when the lifecycle stops, these lines will be printed out:
+
++---------------+
+STOP:{http://www.xchain.org/example2}step1
+STOP:{http://www.xchain.org/example1}step2
+STOP:{http://www.xchain.org/example1}step1
+STOP:{http://www.xchain.org/example2}step2
++---------------+
+
+
+~~ This section by John Trimble. 
+~~ Configuration should probably be a chapter unto itself, but at least this gives some documentation of how configuration steps work until we flush out a more detailed account of this whole process.
+* Lifecycle steps and Configuration
+
+  Lifecycle start steps used for configuration/bootstrapping can gain access to the defined configuration settings by adding a ConfigDocumentContext parameter to their method signature. The ConfigDocumentContext is an implementation of JXPathContext used to wrap the parsed DOM of the xchain's configuration file (generally loaded as a resource from META-INF/xchains-config.xml). In this manner, configuration settings can be read using xpath expressions, and the type coercion abilities of JXPathContext can be leveraged to simplify this process futher still.
+  
+  Consider the following example configuration file,
+
++---------------+
+<?xml version="1.0" encoding="UTF-8"?>
+<config:config xmlns:config="http://xchain.org/config/1.0">
+  <example-config:example-settings xmlns:example-config="http://www.xchain.org/config/example-config">
+    <example-config:value1>5</example-config:value1>
+  </example-config:example-settings>
+</config:config>
++---------------+
+
+  and lifecycle step:
+
++---------------+
+package org.xchain.example.lifecycle;
+
+import org.xchain.framework.lifecycle.LifecycleClass;
+import org.xchain.framework.lifecycle.LifecycleAccessor;
+import org.xchain.framework.lifecycle.StartStep;
+import org.xchain.framework.lifecycle.StopStep;
+import org.xchain.framework.lifecycle.ConfigDocumentContext;
+
+@LifecycleClass(uri="http://www.xchain.org/lifecycle/test-config")
+public class ExampleConfigLifecycleClass {
+  @StartStep(localName="example-config", 
+    xmlns={"xmlns:example-config='http://www.xchain.org/config/example-config'", "xmlns:config='http://xchain.org/config/1.0'"})
+  public static void startConfigExampleStep(LifecycleContext context, ConfigDocumentContext configContext) {
+    Integer value1 = (Integer)configContext.getValue(
+      "config:config/example-config:example-settings/example-config:value1", Integer.class);
+    System.out.println(value1);
+  }
+  
+}
++---------------+
+
+  In this example, the example-config lifecycle step reads, using an xpath expression, the integer 5 from the configuration file and prints it to the standard output. Note the use of namespaces in this example. Any namespace declared in the xmlns property of the StartStep annotation can be used with the ConfigDocumentContext object of that step. It is meant to mimic namespace declarations in XML documents. This saves one the task of manually registering namespaces on the ConfigDocumentContext.
+  
+  Lifecycle steps, of this kind, may have dependencies just like any other lifecycle step. Note, however, that if a step takes a ConfigDocumentContext as a parameter, then it will only run after the \{http://www.xchain.org/framework/lifecycle\}create-config-document-context step. This implicit dependency is necessary as it is the create-config-document-context step which creates the instance of ConfigDocumentContext which other lifecycle steps subsequently use.

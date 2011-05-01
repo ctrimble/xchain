@@ -1,0 +1,316 @@
+/**
+ *    Copyright 2011 meltmedia
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+/* Global
+----------------------------------------------- */
+body {
+  background: #fff url(../images/bg.jpg) repeat-x 0 0;
+  color: #333;
+  font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
+  font-size: 77%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+a:link, a:visited {
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a img {
+  border: none;
+}
+
+sup {
+  font-weight: bold;
+  font-size: 1em;
+  display: inline-block; /* this allows the sup to sit behind the main flyout nav rather using position relative */
+  line-height: 10px;
+  vertical-align: text-top;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+h1 {
+  color: #fff;
+  font-size: 250%;
+}
+
+h2 {
+  border: none;
+  color: #022d84;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 2px 0;
+}
+
+h3 {
+  color: #000;
+  font-size: 108%;
+  border-bottom: 1px solid #bbbaba;
+  padding: 4px 0;
+}
+
+h4 {
+  color: #000;
+  font-size: 93%;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 93%;
+  line-height: 170%;
+}
+
+em {
+  background-color: transparent;
+}
+
+ol li {
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+
+/* print header */
+
+#logo-print {
+  display: none;
+}
+
+.float-left {
+  float: left;
+}
+
+.hide {
+  display: none;
+}
+
+
+/* =Container
+-----------------------------------*/
+
+#container {
+  float: none;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  width: 1000px;
+}
+
+
+/* =Header
+-----------------------------------*/
+
+#header {
+  height: 129px;
+  position: relative;
+}
+
+#header .logo {
+  display: block;
+  position: absolute;
+}
+
+#header h1 {
+  position: absolute;
+  left: 1px;
+  top: 39px;
+}
+
+#header .logo {
+  background: transparent url(../images/logo-xchain.png) no-repeat 0 0;
+  height: 129px;
+  left: 563px;
+  text-indent: -9999em;
+  top: 0;
+  width: 355px;
+}
+
+#header ul, #header dl {
+  font-size: 10px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 108px;
+}
+
+#header ul {
+  background: #cdcdcd url(../images/bg-nav2.gif) repeat-x 0 0;
+  height: 19px;
+  width: 200px;
+}
+
+#header ul, #column-left dt {
+  padding-left: 11px;
+}
+
+#header dl {
+  right: 10px;
+}
+
+#header ul li {
+  display: inline;
+}
+
+#header dt, #header dd {
+  display: inline;
+  margin: 0;
+}
+
+#header dt {
+  color: #063392;
+}
+
+#header ul li, #header ul li a, #header dd {
+  color: #585858;
+}
+
+
+/* =Column-Left
+-----------------------------------*/
+
+#column-left ul {
+  border-right: 1px solid #bfbfbf;
+  border-bottom: 1px solid #bababa;
+  border-left: 1px solid #bfbfbf;
+  margin: 0;
+  margin-top: -19px;
+  margin-right: 17px;
+  padding-bottom: 18px;
+  width: 180px;
+}
+
+#column-left ul, #column-left  li {
+  font-size: 95%;
+  list-style: none;
+  line-height: 0;
+}
+
+#column-left li strong {
+  background: #cdcdcd url(../images/bg-nav.gif) repeat-x 0 0;
+  border-top: 1px solid #bababa;
+  border-bottom: 1px solid #bababa;
+  color: #022d84;
+  display: block;
+  line-height: 250%;
+  margin-top: 18px;
+  padding-left: 10px;
+}
+
+#column-left li a {
+  background-color: #fff;
+  color: #494949;
+  display: block;
+  line-height: 110%;
+  margin: 0;
+  padding: 2px 0 0 20px;
+}
+
+#column-left li.selected a {
+  color: #151515;
+  font-weight: bold;
+}
+
+
+/* =Column-Right
+-----------------------------------*/
+
+#column-right {
+  padding-top: 10px;
+  width: 801px;
+}
+
+/* =Footer
+-----------------------------------*/
+
+#footer {
+  font-size: 10px;
+  text-align: right;
+}
+
+#footer span, #footer ul, #footer dl {
+  margin: 0;
+  padding: 0;
+}
+
+#footer ul {
+  padding-left: 11px;
+}
+
+#footer dl {
+  right: 10px;
+}
+
+#footer ul li {
+  display: inline;
+}
+
+#footer dl, #footer dt, #footer dd {
+  display: inline;
+  margin: 0;
+}
+
+#footer dt {
+  margin-left: 5px;
+  color: #063392;
+}
+
+#footer ul li, #footer ul li a, #footer dd {
+  color: #585858;
+}
+
+/* Maven Theme Defaults
+-----------------------------------*/
+
+.source {
+  border: 1px solid #999;
+  margin: 5px 0 5px 0;
+  padding: 0 15px 0 15px;
+}
+
+code {
+    font-family: Courier, monospace;
+    font-size: 10px;
+}
+
+pre {
+    font-family: Courier, monospace;
+    font-size: 10px;
+}
+
+.errormark, .warningmark, .donemark, .infomark {
+    background: url( ../images/icon_error_sml.gif ) no-repeat;
+}
+
+.warningmark {
+    background-image: url( ../images/icon_warning_sml.gif );
+}
+
+.donemark {
+    background-image: url( ../images/icon_success_sml.gif );
+}
+
+.infomark {
+    background-image: url( ../images/icon_info_sml.gif );
+}

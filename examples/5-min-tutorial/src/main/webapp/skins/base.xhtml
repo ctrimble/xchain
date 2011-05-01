@@ -1,0 +1,87 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/skinner.xsl"?>
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/xhtml.xsl"?>
+
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:skin="http://www.xchain.org/skin"
+  xmlns:servlet="http://www.xchain.org/servlet/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  jsl:exclude-result-prefixes="jsl skin servlet xchain sax html">
+
+  <head>
+    <title id="title">5-Minute Tutorial</title>
+    <style type="text/css">
+      a.active {
+        background-color: #FFF78C;
+        color: #900;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>Skinning 5 Minute Tutorial</h1>
+    </div>
+
+    <!--
+    <ul id="nav">
+      <li><a id="nav-item-1" href="index.xhtml" skin:mode="merge">Home</a></li>
+      <li><a id="nav-item-2" href="page1.xhtml" skin:mode="merge">Page 1</a></li>
+      <li><a id="nav-item-3" href="page2.xhtml" skin:mode="merge">Page 2</a></li>
+    </ul>
+    -->
+
+    <!-- <skin:block id="first"/> -->
+
+    <div id="second">
+      <h3>Step 2</h3>
+      <p>Alright you've just made the index.xhtml page extend the base.xhtml file that also lives in the skin directory.</p>
+      <code>&lt;?skin system-id="resource://servlet-context/skins/base.xhtml"?&gt;</code>
+      <p>The skin processing instruction tells XChain's what it needs to complete itself. You've probably noticed that Step 1 disappeared. <em>Go open base.xhtml and uncomment the following line</em></p>
+      <code>
+        &lt;!--<br />
+        &lt;skin:block id="first"/&gt;<br />
+        --&gt;
+      </code>
+      <p>Step 1 should be back now. This happened because you were extending the base.xhtml file which didn't know where <code>&lt;div id="first"&gt;</code> should go. The line you uncommented had the matching ID so the skinner put the DIV tag in index.xhtml where the skin:block tag was in the base.xhtml file.</p>
+      <p>Quick note on the <em>skin</em> namespace, the last step the skinner does is remove anything with the <em>skin</em> namespace. In this case <code>&lt;skin:block id="first"/&gt;</code> is a placeholder so "Step 1" will be put before "Step 2" in the final output.</p>
+    </div>
+
+    <div id="third">
+      <h3>Step 3</h3>
+      <p>Moving right along, go uncomment the chunk of code below in base.xhtml</p>
+      <code>
+        &lt;!--<br/>
+        &lt;ul id="nav"&gt;<br/>
+          &lt;li&gt;&lt;a id="nav-item-1" href="index.xhtml" skin:mode="merge"&gt;Home&lt;/a&gt;&lt;/li&gt;<br/>
+          &lt;li&gt;&lt;a id="nav-item-2" href="page1.xhtml" skin:mode="merge"&gt;Page 1&lt;/a&gt;&lt;/li&gt;<br/>
+          &lt;li&gt;&lt;a id="nav-item-3" href="page2.xhtml" skin:mode="merge"&gt;Page 2&lt;/a&gt;&lt;/li&gt;<br/>
+        &lt;/ul&gt;<br/>
+        --&lt;
+      </code>
+      <p>A simple nav should be at the top of this page now. Click on "Page 1" to continue.</p>
+    </div>
+
+  </body>
+</html>

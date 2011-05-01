@@ -1,0 +1,63 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/skinner.xsl"?>
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/xhtml.xsl"?>
+<?skin system-id="resource://servlet-context/skins/base.xhtml"?>
+
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:skin="http://www.xchain.org/skin"
+  xmlns:servlet="http://www.xchain.org/servlet/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  jsl:exclude-result-prefixes="jsl skin servlet xchain sax html">
+
+  <head>
+    <title id="title">My Second Page</title>
+  </head>
+
+  <body>
+    <!-- <a id="nav-item-2" class="active"/> -->
+
+    <div id="first">
+      <h3>Step 4</h3>
+      <p>The next thing you should know is the different ways a tag can be handled when one skin extends another.</p>
+      <p>Each page in the nav has a line commented out that looks like the line below.</p>
+      <code>
+        &lt;!-- &lt;a id="nav-item-1" class="active"/&gt; --&gt;
+      </code>
+      <p>Go to the index.xhtml, page1.xhtml, and page2.xhtml and uncomment the line in each file.</p>
+      <p>"Page 1" in the nav now has a special treatment because if you look at the code in base.xhtml we specified that the anchor tags merge. Merging tags will merge content and attributes and new content gets merged to the bottom of the tag.</p>
+      <code><em>From base.xhtml</em><br />
+        &lt;a id="nav-item-2" href="page1.xhtml" skin:mode="merge"&gt;Page 1&lt;/a&gt;
+      </code>
+      <p>The other mode a tag can have is "replace" which will completely replace the tag in the extended document. You've seen this already because all tags by default will replace it's counterpart.</p>
+    </div>
+    
+    <div id="second">
+      <p>Click on "Page 2" to go continue the tutorial.</p>
+    </div>
+
+    <div id="third"/>
+
+  </body>
+
+</html>

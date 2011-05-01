@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog xmlns:xchain="http://www.xchain.org/core/1.0"
+                xmlns:test="http://www.xchain.org/test/1.0">
+
+	<!-- Test that a new variable can be declared.  This also tests that variable defaults to request.-->
+	<xchain:chain xchain:name="xchain:delcare-test">
+		<xchain:variable name="result" select="'string1'"/>
+	</xchain:chain>
+	
+	<!-- Test that an existing variable can be modified. This also tests that variable defaults to request.-->
+	<xchain:chain xchain:name="xchain:modify-test">
+		<xchain:variable name="result" select="'string2'"/>
+	</xchain:chain>
+	
+	<!-- Test that a request variable can be declared from within a chain scope. -->
+	<xchain:chain xchain:name="xchain:request-declare-test">
+		<xchain:chain>
+			<xchain:variable name="result" select="'string1'" scope="request"/>
+		</xchain:chain>
+	</xchain:chain>
+	
+	<!-- Test that a request variable can be modified from within a chain scope. -->
+	<xchain:chain xchain:name="xchain:request-modify-test">
+		<xchain:variable name="result" select="'string1'" scope="request"/>
+		
+		<xchain:chain>
+			<xchain:variable name="result" select="'string2'" scope="request"/>
+		</xchain:chain>		
+	</xchain:chain>
+	
+	<!-- Test that a chain scoped variable declaration does not overwrite a request variable. -->
+	<xchain:chain xchain:name="xchain:chain-scope-test">
+		<xchain:variable name="result" select="'string1'" scope="request"/>
+		
+		<xchain:chain>
+			<xchain:variable name="result" select="'string2'" scope="chain"/>
+		</xchain:chain>		
+	</xchain:chain>
+	
+	<!-- Test that a chainly scoped variable's value is selectable within the chain scope. -->
+	<xchain:chain xchain:name="xchain:chain-modify-test">
+		<xchain:variable name="result" select="'string1'" scope="request"/>
+		
+		<xchain:chain>
+			<xchain:variable name="result" select="'string2'" scope="chain"/>
+			<xchain:variable name="result" select="$result" scope="request"/>
+		</xchain:chain>
+	</xchain:chain>
+	
+	<xchain:chain xchain:name="xchain:execution-scope-declare-test">
+		<xchain:variable name="result" select="'string1'" scope="execution"/>
+	</xchain:chain>
+	
+	<xchain:chain xchain:name="xchain:execution-scope-select-test">
+		<xchain:variable name="result" select="'initial'" scope="request"/>
+		
+		<xchain:variable name="execution-scope-variable" select="'execution-scope'" scope="execution"/>
+		
+		<xchain:chain>
+			<xchain:variable name="result" select="$execution-scope-variable" scope="request"/>
+		</xchain:chain>
+	</xchain:chain>	
+	
+	<xchain:chain xchain:name="xchain:execution-scope-modify-test">
+		<xchain:variable name="result" select="'initial'" scope="request"/>
+		
+		<xchain:variable name="execution-scope-variable" select="'execution-scope'" scope="execution"/>
+		
+		<xchain:chain>
+			<xchain:variable name="execution-scope-variable" select="'final-value'" scope="execution"/>
+			<xchain:variable name="result" select="$execution-scope-variable" scope="request"/>
+		</xchain:chain>
+	</xchain:chain>		
+
+  <xchain:chain xchain:name="xchain:select-component-exception-test">
+    <xchain:variable name="example" select="throwException($xchain:exception-component)"/>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="xchain:select-function-exception-test">
+    <xchain:variable name="example" select="xchain:static-throw-exception()"/>
+  </xchain:chain>
+
+</xchain:catalog>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+   xmlns:servlet="http://www.xchain.org/servlet/1.0"
+   xmlns:sax="http://www.xchain.org/sax/1.0"
+   xmlns:xchain="http://www.xchain.org/core/1.0">
+
+  <xchain:chain xchain:name="servlet:post">
+    <sax:pipeline>
+      <sax:command-source>
+      	<jsl:template xmlns:jsl="http://www.xchain.org/jsl/1.0">
+	        <html xmlns="http://www.w3.org/1999/xhtml">
+	        	<head>
+	        		<title>Test Post</title>
+	        	</head>
+	        	<body>
+	        		<h1>This is a post test</h1>
+	        		<jsl:value-of select="$servlet:request/parameterMap/oneKey"/>
+	        		<jsl:value-of select="$servlet:request/parameterMap/threeKey"/>
+	        	</body>
+	        </html>
+        </jsl:template>
+      </sax:command-source>
+      <servlet:result/>
+    </sax:pipeline>    
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="servlet:get">
+    <sax:pipeline>
+      <sax:command-source>
+      	<jsl:template xmlns:jsl="http://www.xchain.org/jsl/1.0">
+	        <html xmlns="http://www.w3.org/1999/xhtml">
+	        	<head>
+	        		<title>Test Get</title>
+	        	</head>
+	        	<body>
+	        		<h1>This is a get test</h1>
+	        	</body>
+	        </html>
+        </jsl:template>
+      </sax:command-source>
+      <servlet:result/>
+    </sax:pipeline>    
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="servlet:copy">
+    <sax:pipeline>
+      <sax:command-source>
+      	<jsl:template xmlns:jsl="http://www.xchain.org/jsl/1.0">
+	        <html xmlns="http://www.w3.org/1999/xhtml">
+	        	<head>
+	        		<title>Test Copy</title>
+	        	</head>
+	        	<body>
+	        		<h1>This is a copy test</h1>
+	        	</body>
+	        </html>
+        </jsl:template>
+      </sax:command-source>
+      <servlet:result/>
+    </sax:pipeline>    
+  </xchain:chain>      
+
+</xchain:catalog>

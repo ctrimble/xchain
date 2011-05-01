@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xchain-transformer-factory name="{http://www.xchain.org/core}joost"?>
+<!--
+  A simple identety stx template that should be loaded by joost.
+  -->
+<stx:transform
+   xmlns:stx="http://stx.sourceforge.net/2002/ns" version="1.0">
+
+  <stx:template match="node()">
+    <stx:copy attributes="@*">
+      <stx:process-attributes/>
+      <stx:process-children/>
+    </stx:copy>
+  </stx:template>
+
+  <stx:template match="transform-count">
+    <stx:copy attributes="@*">
+      <stx:value-of select="1 + ."/>
+    </stx:copy>
+  </stx:template>
+
+</stx:transform>

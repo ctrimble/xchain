@@ -1,0 +1,61 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/skinner.xsl"?>
+<?xchain-stylesheet system-id="resource://context-class-loader/org/xchain/namespaces/servlet/xhtml.xsl"?>
+<!--
+  <?skin system-id="resource://servlet-context/skins/base.xhtml"?>
+-->
+
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:skin="http://www.xchain.org/skin"
+  xmlns:servlet="http://www.xchain.org/servlet/1.0"
+  xmlns:jsl="http://www.xchain.org/jsl/1.0"
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:sax="http://www.xchain.org/sax/1.0"
+  jsl:exclude-result-prefixes="jsl skin servlet xchain sax html">
+
+  <head>
+    <title id="title">Skinning 5 Minute Tutorial</title>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>Skinning 5 Minute Tutorial</h1>
+    </div>
+
+    <!-- <a id="nav-item-1" class="active"/> -->
+
+    <div id="first">
+      <h3>Step 1</h3>
+      <p>Welcome to the skinning 5-minute tutorial. We'll walk through step by step and get you up and rolling with XChain's skinning.</p>
+      <p>By now you've gone through a few of the other tutorials and so probably know how to work with some of the features that XChain's provides. Since you're familiar with how the files work lets jump right in. <em>Open up the skins/index.xhtml file.</em></p>
+      <p>You should see the code below at the top of the document.</p>
+      <code>
+        &lt;!-- <br />
+        &lt;?skin system-id="resource://servlet-context/skins/base.xhtml"?&gt;<br />
+        --&gt;
+      </code>
+      <p>Remove the comment and reload this page.</p>
+    </div>
+
+  </body>
+
+</html>

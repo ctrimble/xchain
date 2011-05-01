@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog xmlns:xchain="http://www.xchain.org/core/1.0">
+  <xchain:with select="$testPerson" xchain:name="xchain:with-basic-test">
+    <xchain:variable name="result" select="/name" scope="request"/>
+  </xchain:with>
+  
+  <xchain:with select="$joe" xchain:name="xchain:with-root-select">
+  	<xchain:variable name="person-result" select="/" scope="request"/>
+  </xchain:with>
+  
+  <xchain:chain xchain:name="xchain:with-scope">
+  	<xchain:variable name="result" select="'invalid'" scope="request"/>
+  	<xchain:with select="$joe">
+  	  <xchain:variable name="chain-result" select="'valid'" scope="chain"/>
+	  <xchain:execute name="'nested'"/>  
+	  <xchain:variable name="final-chain-result" select="$chain-result" scope="request"/>		
+  	</xchain:with>
+  </xchain:chain>
+  
+  <xchain:chain xchain:name="nested">
+  	<xchain:variable name="result" select="name" scope="request"/>
+  	<xchain:variable name="chain-result" select="'invalid'" scope="chain"/>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="xchain:context-class">
+    <xchain:variable name="result" select="getClass(.)"/>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="xchain:child-context-class">
+    <xchain:with select="child">
+      <xchain:variable name="result" select="getClass(.)"/>
+    </xchain:with>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="xchain:variable-context-class">
+    <xchain:with select="$parent">
+      <xchain:variable name="result" select="getClass(.)"/>
+    </xchain:with>
+  </xchain:chain>
+</xchain:catalog>

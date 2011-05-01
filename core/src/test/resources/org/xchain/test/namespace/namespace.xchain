@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+
+       Copyright 2011 meltmedia
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<xchain:catalog
+  xmlns:xchain="http://www.xchain.org/core/1.0"
+  xmlns:namespace="http://www.xchain.org/test/namespace">
+
+  <namespace:copy-namespace xchain:name="namespace:test-namespaces-on-tag"
+    xmlns:test1="http://www.xchain.org/test/namespace/test1"
+    variable="namespace-test1"
+    prefix="'test1'"/>
+
+  <xchain:chain xchain:name="namespace:test-namespace-on-outer-tag"
+    xmlns:test1="http://www.xchain.org/test/namespace/test1"
+    xmlns:test2="http://www.xchain.org/test/namespace/test2">
+    <namespace:copy-namespace variable="namespace-test1" prefix="'test1'"/>
+    <namespace:copy-namespace variable="namespace-test2" prefix="'test2'"/>
+    <namespace:copy-namespace variable="namespace-xchain" prefix="'xchain'"/>
+  </xchain:chain>
+
+  <xchain:chain xchain:name="namespace:test-namespace-unmapped"
+    xmlns:test1="http://www.xchain.org/test/namespace/test2">
+    <namespace:copy-namespace variable="before-namespace-test1" prefix="'test1'"/>
+    <namespace:copy-namespace variable="before-namespace-test2" prefix="'test2'"/>
+    <xchain:chain
+      xmlns:test1="http://www.xchain.org/test/namespace/test1"
+      xmlns:test2="http://www.xchain.org/test/namespace/test2">
+      <namespace:copy-namespace variable="namespace-test1" prefix="'test1'"/>
+      <namespace:copy-namespace variable="namespace-test2" prefix="'test2'"/>
+    </xchain:chain>
+    <namespace:copy-namespace variable="after-namespace-test1" prefix="'test1'"/>
+    <namespace:copy-namespace variable="after-namespace-test2" prefix="'test2'"/>
+  </xchain:chain>  
+
+</xchain:catalog>

@@ -101,9 +101,9 @@
         <version>1.0.1B</version>
       </dependency>
       <dependency>
-        <groupId>shrinksafe</groupId>
-        <artifactId>shrinksafe</artifactId>
-        <version>1.7.0-meltmedia</version>
+        <groupId>com.github.lltyk</groupId>
+        <artifactId>dojo-shrinksafe</artifactId>
+        <version>1.7.2</version>
       </dependency>
       <dependency>
         <groupId>org.jmock</groupId>
@@ -144,12 +144,12 @@
       <dependency>
         <groupId>net.sf.joost</groupId>
         <artifactId>joost</artifactId>
-        <version>20081012</version>
+        <version>0.9.1</version>
       </dependency>
       <dependency>
         <groupId>net.sf.saxon</groupId>
-        <artifactId>saxonb</artifactId>
-        <version>9.1.0.2</version>
+        <artifactId>saxon</artifactId>
+        <version>9.1.0.8</version>
       </dependency>
       <dependency>
         <groupId>xalan</groupId>
@@ -164,7 +164,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-jci-core</artifactId>
-        <version>1.1-MELTMEDIA-748307</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>commons-beanutils</groupId>
@@ -174,7 +174,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-jci-eclipse</artifactId>
-        <version>1.1-MELTMEDIA-748307</version>
+        <version>1.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -206,7 +206,7 @@
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-annotations</artifactId>
-        <version>3.3.1.ga</version>
+        <version>3.3.1.GA</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate</groupId>
@@ -230,9 +230,9 @@
       </dependency>
       <!-- Quartz -->
       <dependency>
-        <groupId>org.opensymphony.quartz</groupId>
+        <groupId>opensymphony</groupId>
         <artifactId>quartz</artifactId>
-        <version>1.6.5</version>
+        <version>1.6.3</version>
       </dependency>
       <!-- Logging Dependencies -->
       <dependency>
@@ -258,17 +258,44 @@
       <dependency>
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
-        <version>99.0-does-not-exist</version>
+        <version>1.1.2</version>
+        <scope>provided</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
 
 
   <repositories>
+    <!--
     <repository>
       <id>meltmedia.nexus-thirdparty</id>
       <name>meltmedia Third Party Repository [m2]</name>
       <url>http://nexus.meltdev.com/content/repositories/thirdparty/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+       -->
+    <repository>
+      <id>java.net</id>
+      <name>Java.net Repository</name>
+      <url>http://download.java.net/maven/2/</url>
+    </repository>
+    <repository>
+      <id>apache-snapshots</id>
+      <name>Apache Maven SNAPSHOTS</name>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>jboss-deprecated</id>
+      <name>JBoss Deprecated Repository [m2]</name>
+      <url>https://repository.jboss.org/nexus/content/repositories/deprecated</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>

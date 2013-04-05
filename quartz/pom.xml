@@ -39,7 +39,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.opensymphony.quartz</groupId>
+      <groupId>opensymphony</groupId>
       <artifactId>quartz</artifactId>
     </dependency>
     <!-- Logging Dependencies -->
@@ -78,6 +78,7 @@
             <report>javadoc</report>
            </reports>
           </reportSet>
+          <!--
           <reportSet>
             <id>NamespaceDoclet</id>
             <configuration>
@@ -96,14 +97,13 @@
               </docletArtifact>
               <docletArtifact>
                 <groupId>net.sf.saxon</groupId>
-                <artifactId>saxonb</artifactId>
-                <version>9.1.0.2</version>
+                <artifactId>saxon</artifactId>
               </docletArtifact>
               </docletArtifacts>
 
               <destDir>../generated-site/</destDir>
 
-              <!-- For the project-reports page-->
+              <!- - For the project-reports page- ->
               <name>NamespaceDoclet</name>
               <description>Namespace documentation.</description>
             </configuration>
@@ -111,6 +111,7 @@
               <report>javadoc</report>
             </reports>
           </reportSet>
+          -->
         </reportSets>        
       </plugin>
       <plugin>

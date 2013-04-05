@@ -48,8 +48,8 @@
       <artifactId>commons-fileupload</artifactId>
     </dependency>
     <dependency>
-      <groupId>shrinksafe</groupId>
-      <artifactId>shrinksafe</artifactId>
+      <groupId>com.github.lltyk</groupId>
+      <artifactId>dojo-shrinksafe</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -98,6 +98,7 @@
             <report>javadoc</report>
            </reports>
           </reportSet>
+          <!--
           <reportSet>
             <id>NamespaceDoclet</id>
             <configuration>
@@ -116,14 +117,13 @@
               </docletArtifact>
               <docletArtifact>
                 <groupId>net.sf.saxon</groupId>
-                <artifactId>saxonb</artifactId>
-                <version>9.1.0.2</version>
+                <artifactId>saxon</artifactId>
               </docletArtifact>
               </docletArtifacts>
 
               <destDir>../generated-site/</destDir>
 
-              <!-- For the project-reports page-->
+              <!- - For the project-reports page- ->
               <name>NamespaceDoclet</name>
               <description>Namespace documentation.</description>
             </configuration>
@@ -131,6 +131,7 @@
               <report>javadoc</report>
             </reports>
           </reportSet>
+          -->
         </reportSets>        
       </plugin>
       <plugin>

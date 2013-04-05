@@ -76,6 +76,10 @@
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mozilla</groupId>
+      <artifactId>rhino</artifactId>
+    </dependency>
     <!--
     This is a fake dependency to remove commons-logging from all transitive dependencies
     as SLF4J is wrapping the commons-logging API's for us.

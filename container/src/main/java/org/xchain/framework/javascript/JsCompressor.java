@@ -149,7 +149,7 @@ public class JsCompressor {
       String compressedData = data;
       if( shouldCompress(jsUrl) ) {
         if( log.isDebugEnabled() ) log.debug("Compressing URL: "+jsUrl);
-        compressedData = Compressor.compressScript(data, 0, 1, false);
+        compressedData = Compressor.compressScript(data, 0, 1, false, "normal");
       } else if( log.isDebugEnabled() ) log.debug("Not compressing URL: "+jsUrl);
       ByteArrayInputStream sin = null;
       try {

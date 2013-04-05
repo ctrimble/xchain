@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+	<properties>
+		<title>javascript namespace</title>
+	</properties>
+	<body>
+	<section name="javascript Namespace">
+	<p>Namespace URI: http://www.xchain.org/javascript/1.0</p>		<p>This namespace provides commands to serve JavaScript via a servlet container.</p>
+	</section>
+		<section name="Available Commands">
+<subsection name="merge-javascript">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>response</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:response</td><td>HttpServletResponse</td></tr>
+					<tr><td>manifest</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>compress</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>\false\</td><td>Boolean</td></tr>
+					<tr><td>optimization-level</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>0</td><td>Integer</td></tr>
+					<tr><td>debug</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>\false\</td><td>Boolean</td></tr>
+				</table>
+A basic javascript merging command. Will cache results for a merge of the compression flag is set.
+
+</subsection>		</section>
+	</body>
+</document>

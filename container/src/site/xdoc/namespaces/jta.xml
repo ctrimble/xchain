@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+	<properties>
+		<title>jta namespace</title>
+	</properties>
+	<body>
+	<section name="jta Namespace">
+	<p>Namespace URI: http://www.xchain.org/jta/1.0</p>		<p>This namespace provides commands to access data related to the JTA API.</p>
+	</section>
+		<section name="Available Commands">
+<subsection name="transaction">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>timeout</td><td>The transaction timeout</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>\90\</td><td>Integer</td></tr>
+					<tr><td>result</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.QNAME">org.xchain.annotations.AttributeType.QNAME</a></td><td>{http://www.xchain.org/jta/1.0}user-transaction</td><td>QName</td></tr>
+				</table>
+Demarcate the bounds of a JTA UserTransaction 
+<source>
+&lt;jta:transaction xmlns:jta="http://www.xchain.org/jta/1.0" timeout="90"/&gt;
+</source>
+
+</subsection>		</section>
+	</body>
+</document>

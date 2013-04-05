@@ -12,20 +12,6 @@
   <artifactId>xchain-container</artifactId>
 
   <name>Container Namespaces</name>
-  <url>http://www.xchain.org/container/</url>
-
-  <scm>
-    <connection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/container/</connection>
-    <developerConnection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/container/</developerConnection>
-    <url>http://svn.meltmedia.com/repos/xchain/trunk/container/</url>
-  </scm>
-
-  <distributionManagement>
-    <site>
-      <id>xchain.site</id>
-      <url>scp://www.xchain.org/home/xchain/www/www.xchain.org/container/</url>
-    </site>
-  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -97,13 +83,6 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <reportSets>
           <reportSet>
-           <id>html</id>
-           <reports>
-            <report>javadoc</report>
-           </reports>
-          </reportSet>
-          <!--
-          <reportSet>
             <id>NamespaceDoclet</id>
             <configuration>
               <doclet>org.xchain.framework.doclets.NamespaceDoclet</doclet>
@@ -122,12 +101,13 @@
               <docletArtifact>
                 <groupId>net.sf.saxon</groupId>
                 <artifactId>saxon</artifactId>
+                <version>9.1.0.8</version>
               </docletArtifact>
               </docletArtifacts>
 
               <destDir>../generated-site/</destDir>
 
-              <!- - For the project-reports page- ->
+              <!-- For the project-reports page -->
               <name>NamespaceDoclet</name>
               <description>Namespace documentation.</description>
             </configuration>
@@ -135,12 +115,17 @@
               <report>javadoc</report>
             </reports>
           </reportSet>
-          -->
+          <reportSet>
+           <id>html</id>
+           <reports>
+            <report>javadoc</report>
+           </reports>
+          </reportSet>
         </reportSets>        
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jxr-maven-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
         <configuration>
           <linkJavadoc>true</linkJavadoc>
           <javadocDir>${basedir}/target/site/apidocs</javadocDir>
@@ -168,6 +153,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
+        <!--
         <configuration>
           <targetJdk>1.5</targetJdk>
           <rulesets>
@@ -180,6 +166,7 @@
           <sourceEncoding>utf-8</sourceEncoding>
           <minimumTokens>100</minimumTokens>
         </configuration>
+          -->
       </plugin>
     </plugins>
   </reporting>

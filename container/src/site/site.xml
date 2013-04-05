@@ -25,9 +25,9 @@
   <publishDate format="MMM dd yyyy" />
 
   <skin>
-    <groupId>org.xchain.maven</groupId>
-    <artifactId>xchain-skin</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-fluido-skin</artifactId>
+    <version>1.3.0</version>
   </skin>
 
   <body>

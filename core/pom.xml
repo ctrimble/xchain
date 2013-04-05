@@ -12,20 +12,6 @@
   <artifactId>xchain-core</artifactId>
 
   <name>Core Framework</name>
-  <url>http://www.xchain.org/</url>
-
-  <scm>
-    <connection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/core/</connection>
-    <developerConnection>scm:svn:http://svn.meltmedia.com/repos/xchain/trunk/core/</developerConnection>
-    <url>http://svn.meltmedia.com/repos/xchain/trunk/core/</url>
-  </scm>
-
-  <distributionManagement>
-    <site>
-      <id>xchain.site</id>
-      <url>scp://www.xchain.org/home/xchain/www/www.xchain.org/core/</url>
-    </site>
-  </distributionManagement>
 
   <dependencies>
     <dependency>
@@ -182,16 +168,18 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.7</version>
         <reportSets>
-          <!-- There is a circular dependency here.  It needs to be unwound. 
+          <!-- A bug in the site plugin 3.2 prevents multiple doclets from running.
+             The results of this plugin have been committed to:
+             - src/site/apt/namespaces/attributetypes.apt
+             - src/site/xdoc
           <reportSet>
             <id>NamespaceDoclet</id>
             <configuration>
               <doclet>org.xchain.framework.doclets.NamespaceDoclet</doclet>
               <useStandardDocletOptions>flase</useStandardDocletOptions>
 
-              <!- -<docletPath>${basedir}/target/classes/</docletPath>- ->
+              <docletPath>${basedir}/target/classes/</docletPath>
               <docletArtifacts>
                 <docletArtifact>
                   <groupId>org.xchain</groupId>
@@ -206,6 +194,7 @@
                 <docletArtifact>
                   <groupId>net.sf.saxon</groupId>
                   <artifactId>saxon</artifactId>
+                  <version>9.1.0.8</version>
                 </docletArtifact>
               </docletArtifacts>              
               <destDir>../generated-site/</destDir>
@@ -217,7 +206,7 @@
               <report>javadoc</report>
             </reports>
           </reportSet>
-          -->
+           -->
           <reportSet>
             <id>html</id>
             <reports>
@@ -227,8 +216,8 @@
         </reportSets>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jxr-maven-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
         <configuration>
           <linkJavadoc>true</linkJavadoc>
           <destDir>${basedir}/target/site/xref</destDir>
@@ -238,11 +227,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>2.8.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.6</version>
         <configuration>
           <outputDirectory>${basedir}/target/site/reports/checkstyle</outputDirectory>
         </configuration>
@@ -257,6 +244,10 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.0.1</version>
+        <!--
+          These rulesets are causing problems, but the previous PMD version seemed to
+          be incompatible with the maven site plugin version 3.2
         <configuration>
           <targetJdk>1.5</targetJdk>
           <rulesets>
@@ -269,6 +260,7 @@
           <sourceEncoding>utf-8</sourceEncoding>
           <minimumTokens>100</minimumTokens>
         </configuration>
+          -->
       </plugin>
     </plugins>
   </reporting>

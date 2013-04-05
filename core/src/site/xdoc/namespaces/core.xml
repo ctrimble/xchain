@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+	<properties>
+		<title>core namespace</title>
+	</properties>
+	<body>
+	<section name="core Namespace">
+	<p>Namespace URI: http://www.xchain.org/core/1.0</p>		<p>The base core commands for xchains. These commands provide flow control and value management in the current context.</p>
+	</section>
+		<section name="Available Catalogs">
+<subsection name="catalog">
+The default implementation of Catalog for the XChains package.
+
+</subsection>		</section>
+		<section name="Available Commands">
+<subsection name="chain">
+<p>A general container for xchain commands. Children of a chain are executed, in order, until one of them returns 
+<code>
+true
+</code> or throws an exception.</p>
+<p>If one of the chain's children returns 
+<code>
+true
+</code>, then each child that was executed will have its post process executed and then the chain will return 
+<code>
+true
+</code>.</p>
+<p>If one of the chain's children throws an exception, then each children that was executed, including the command that threw the exception, will have its post process executed with the exception that was thrown. If none of the children's post process returns 
+<code>
+true
+</code>, then the exception will be rethrown by this chain. If any of the childrens post process returns 
+<code>
+true
+</code>, then this chain will return 
+<code>
+false
+</code> and its next sibling will execute.</p> 
+<source>
+&lt;xchain:chain xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+   ...
+ &lt;/xchain:chain&gt;
+</source>
+
+</subsection><subsection name="choose">
+<p>The 
+<code>
+choose
+</code> command allows the execution of one chain based on tested conditions. Only 
+<code>
+when
+</code> and 
+<code>
+otherwise
+</code> commands can be direct children of the 
+<code>
+choose
+</code> command. Each 
+<code>
+when
+</code> command has a 
+<code>
+test
+</code> attribute. The first 
+<code>
+when
+</code> command whose 
+<code>
+test
+</code> attribute evaluates to 
+<code>
+true
+</code> will be executed and no other child 
+<code>
+when
+</code> or 
+<code>
+otherwise
+</code> commands will be executed or have their test condition evaluated. 
+<code>
+otherwise
+</code> commands will always be executed if encountered.</p> 
+<source>
+&lt;xchain:choose xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+   &lt;xchain:when test="/some/xpath"&gt;
+     ...
+   &lt;/xchain:when&gt;
+   &lt;xchain:when test="/some/other/xpath"&gt;
+     ...
+   &lt;/xchain:when&gt;
+   &lt;xchain:otherwise&gt;
+     ...
+   &lt;/xchain:otherwise&gt;
+ &lt;/xchain:choose&gt;
+</source>
+
+<div class="section"><a name="otherwise"/><h4>otherwise</h4>
+<p>
+<code>
+choose
+</code> commands can include an 
+<code>
+otherwise
+</code> command. This command will be executed if none of the 
+<code>
+when
+</code> clauses associated with the same 
+<code>
+choose
+</code> command executed.</p>
+
+</div><div class="section"><a name="when"/><h4>when</h4>
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>test</td><td><p>The test for this <code>when</code> clause.  If the test evaluates to <code>true</code>, then the when clause is executed.  
+ If the test evaluates to <code>false</code>, then the 
+ next <code>when</code> or <code>otherwise</code> command in the choose will be tested.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+<p>
+<code>
+choose
+</code> commands can have one or more 
+<code>
+when
+</code> commands nested in it. The first 
+<code>
+when
+</code> command whose 
+<code>
+test
+</code> evaluates to 
+<code>
+true
+</code> will be executed.</p>
+
+</div></subsection><subsection name="debug-message">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>message</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>Empty Message</td><td>String</td></tr>
+					<tr><td>level</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>debug</td><td>String</td></tr>
+					<tr><td>logger</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>org.xchain.namespaces.core.DebugMessageCommand</td><td>String</td></tr>
+				</table>
+
+
+</subsection><subsection name="eval">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>expression</td><td>The xpath expression to be evaluated using context.getValue(context, Object.class);</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Object</td></tr>
+				</table>
+<p>The 
+<code>
+eval
+</code> command will evaluate an xpath expression. 
+<source>
+&lt;xchain:eval xmlns:xchain="http://www.xchain.org/core/1.0" expression="/some/xpath"/&gt;
+</source></p>
+
+</subsection><subsection name="execute">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>system-id</td><td>The system id of the catalog to search for the command.  If no system id is provided, then the current catalog is
+ searched. If the system id is relative, then it is resolved against the current catalog's system id.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>name</td><td>The qname of the command to execute.  The qname is required.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>QName</td></tr>
+				</table>
+<p>The 
+<code>
+execute
+</code> command can execute another command chain. The command can be in the current catalog or in a different catalog. The command chain will continue if and only if the referenced command would continue the command chain.</p> 
+<source>
+&lt;xchain:chain xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+   ...
+   &lt;xchain:execute system-id="$myCatalog" name="$myCommand"&gt;
+   ...
+ &lt;/xchain:choose&gt;
+</source>
+
+</subsection><subsection name="filter-chain">
+<p>A general container for xchain commands. Children of a chain are executed, in order, until one of them returns 
+<code>
+true
+</code> or throws an exception.</p>
+<p>If one of the chain's children returns 
+<code>
+true
+</code>, then each child that was executed will have its post process executed and then the chain will return 
+<code>
+true
+</code>.</p>
+<p>If one of the chain's children throws an exception, then each children that was executed, including the command that threw the exception, will have its post process executed with the exception that was thrown. If none of the children's post process returns 
+<code>
+true
+</code>, then the exception will be rethrown by this chain. If any of the children's post process returns 
+<code>
+true
+</code>, then this chain will return 
+<code>
+false
+</code> and its next sibling will execute.</p>
+<p>If post process is run on this chain then the post process will be run on it's children in reverse order of their original execution.</p> 
+<source>
+&lt;xchain:filter-chain xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+   ...
+ &lt;/xchain:filter-chain&gt;
+</source>
+
+</subsection><subsection name="filter-choose">
+<p>The 
+<code>
+choose
+</code> command implemented as a filter. This command allows the execution of one chain based on tested conditions. Only 
+<code>
+when
+</code> and 
+<code>
+otherwise
+</code> commands can be direct children of the 
+<code>
+choose
+</code> command. Each 
+<code>
+when
+</code> command has a 
+<code>
+test
+</code> attribute. The first 
+<code>
+when
+</code> command whose 
+<code>
+test
+</code> attribute evaluates to 
+<code>
+true
+</code> will be executed and no other child 
+<code>
+when
+</code> or 
+<code>
+otherwise
+</code> commands will be executed or have their 
+<code>
+test
+</code> condition evaluated. 
+<code>
+otherwise
+</code> commands will always be executed if encountered.</p> 
+<source>
+&lt;xchain:filter-choose xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+   &lt;xchain:when test="/some/xpath"&gt;
+     ...
+   &lt;/xchain:when&gt;
+   &lt;xchain:when test="/some/other/xpath"&gt;
+     ...
+   &lt;/xchain:when&gt;
+   &lt;xchain:otherwise&gt;
+     ...
+   &lt;/xchain:otherwise&gt;
+ &lt;/xchain:filter-choose&gt;
+</source>
+
+<div class="section"><a name="otherwise"/><h4>otherwise</h4>
+<p>
+<code>
+filter-choose
+</code> commands can include an 
+<code>
+otherwise
+</code> command. This command will be executed if none of the 
+<code>
+when
+</code> clauses associated with the same 
+<code>
+filter-choose
+</code> command executed.</p>
+
+</div><div class="section"><a name="when"/><h4>when</h4>
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>test</td><td><p>The test for this <code>when</code> clause.  If the test evaluates to <code>true</code>, then the <code>when</code> clause is 
+ executed.  If the test evaluates to <code>false</code>, then the next <code>when</code> or <code>otherwise</code> command in the 
+ <code>filter-choose</code> will be tested.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+<p>
+<code>
+filter-choose
+</code> commands can have one or more when commands nested in it. The first 
+<code>
+when
+</code> command whose 
+<code>
+test
+</code> evaluates to 
+<code>
+true
+</code> will be executed.</p>
+
+</div></subsection><subsection name="filter-if">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>test</td><td>The test for the if command.  This should evaluate to a boolean.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+<p>The 
+<code>
+if
+</code> command implemented as a filter. This command will execute its child commands if the 
+<code>
+test
+</code> attribute evaluates to 
+<code>
+true
+</code>.</p> 
+<source>
+&lt;xchain:filter-if xmlns:xchain="http://www.xchain.org/core/1.0" test="/some/xpath"&gt;
+   ...
+ &lt;/xchain:filter-if&gt;
+</source>
+
+</subsection><subsection name="filter-variable">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td>The QName of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.QNAME">org.xchain.annotations.AttributeType.QNAME</a></td><td>N/A</td><td>QName</td></tr>
+					<tr><td>select</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Object</td></tr>
+					<tr><td>select-nodes</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_SELECT_NODES">org.xchain.annotations.AttributeType.JXPATH_SELECT_NODES</a></td><td>N/A</td><td>List</td></tr>
+					<tr><td>select-single-node</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE">org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE</a></td><td>N/A</td><td>Object</td></tr>
+					<tr><td>scope</td><td>The scope of the variable.  Can either be the literal request, exeuction or chain.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.LITERAL">org.xchain.annotations.AttributeType.LITERAL</a></td><td>request</td><td>Scope</td></tr>
+				</table>
+<p>The 
+<code>
+variable
+</code> command implemented as a filter. The 
+<code>
+filter-variable
+</code> will declare and set a variable in the context. The 
+<code>
+name
+</code> attribute is the QName of the variable. The 
+<code>
+select
+</code>, 
+<code>
+select-nodes
+</code>, or 
+<code>
+select-single-node
+</code> attribute will be the value of the variable. The 
+<code>
+scope
+</code> attribute will determine the scope of the variable. A 'chain' scope variable will only exist in the current context. A 'request' scope variable will exist for every context. A request scope is assumed if no scope attribute is provided.</p>
+<p>During post process the original value at the QName will be restored. If no value existed at the QName then the variable will be undeclared.</p>
+
+</subsection><subsection name="for-each">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>select</td><td>An XPath to a list.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_ITERATE_POINTERS">org.xchain.annotations.AttributeType.JXPATH_ITERATE_POINTERS</a></td><td>N/A</td><td>Iterator</td></tr>
+				</table>
+The 
+<code>
+for-each
+</code> will execute its child commands for each element selected by the 
+<code>
+select
+</code> attribute. 
+<source>
+&lt;xchain:for-each xmlns:xchain="http://www.xchain.org/core/1.0" select="/some/xpath"&gt;
+   ...
+ &lt;/xchain:for-each&gt;
+</source> 
+<source>
+&lt;xchain:for-each xmlns:xchain="http://www.xchain.org/core/1.0" select-nodes="/some/xpath"&gt;
+   ...
+ &lt;/xchain:for-each&gt;
+</source>
+
+</subsection><subsection name="handled">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>test</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+<p>A command that can stop the execution of an xchain by reporting that it handled the request. The command will return true when its test condition is true.</p> 
+<source>
+  &lt;xchain:chain xmlns:xchain="http://www.xchain.org/core/1.0"&gt;
+     &lt;xchain:handled test="true()"/&gt;
+     &lt;-- A command here will never execute --&gt;
+   &lt;/xchain:chain&gt;
+</source>
+
+</subsection><subsection name="if">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>test</td><td>The test for the <code>if</code> command.  This should evaluate to a boolean.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+The 
+<code>
+if
+</code> command will execute its child commands if the 
+<code>
+test
+</code> attribute evaluates to 
+<code>
+true
+</code>. 
+<source>
+&lt;xchain:if xmlns:xchain="http://www.xchain.org/core/1.0" test="/some/xpath"&gt;
+   ...
+ &lt;/xchain:if&gt;
+</source>
+
+</subsection><subsection name="iterate">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>variable</td><td>The QName of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.QNAME">org.xchain.annotations.AttributeType.QNAME</a></td><td>N/A</td><td>QName</td></tr>
+					<tr><td>iterator</td><td>The JXPath of the java.util.Iterator object.  This method is provided for backwards compatiblity, the
+ select attribute should be used instead.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Iterator</td></tr>
+					<tr><td>select</td><td>The JXPath of the object to iterate.  The object can be of type java.util.Iterator, java.util.Enumeration,
+ java.util.Collection, java.util.Map, or an array.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Object</td></tr>
+					<tr><td>scope</td><td>The scope of the variable.  Can either be the literal global or local.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.LITERAL">org.xchain.annotations.AttributeType.LITERAL</a></td><td>request</td><td>Scope</td></tr>
+				</table>
+The 
+<code>
+iterate
+</code> command will execute its child commands for each element in the object selected by the 
+<code>
+select
+</code> attribute. 
+<source>
+&lt;xchain:iterate xmlns:xchain="http://www.xchain.org/core/1.0" select="/some/xpath" variable="name"&gt;
+   ...
+ &lt;/xchain:iterate&gt;
+</source>
+
+</subsection><subsection name="throw">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>select</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Exception</td></tr>
+				</table>
+
+
+</subsection><subsection name="trace">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>message</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>Beginning XChain Stack trace</td><td>String</td></tr>
+					<tr><td>level</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>debug</td><td>String</td></tr>
+					<tr><td>logger</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE">org.xchain.annotations.AttributeType.ATTRIBUTE_VALUE_TEMPLATE</a></td><td>org.xchain.namespaces.core.TraceCommand</td><td>String</td></tr>
+				</table>
+
+
+</subsection><subsection name="variable">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td>The QName of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.QNAME">org.xchain.annotations.AttributeType.QNAME</a></td><td>N/A</td><td>QName</td></tr>
+					<tr><td>select</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Object</td></tr>
+					<tr><td>select-nodes</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_SELECT_NODES">org.xchain.annotations.AttributeType.JXPATH_SELECT_NODES</a></td><td>N/A</td><td>List</td></tr>
+					<tr><td>select-single-node</td><td>The value of the variable.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE">org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE</a></td><td>N/A</td><td>Object</td></tr>
+					<tr><td>scope</td><td>The scope of the variable.  Can either be the literal request, execution or chain.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.LITERAL">org.xchain.annotations.AttributeType.LITERAL</a></td><td>request</td><td>Scope</td></tr>
+				</table>
+<p>The 
+<code>
+variable
+</code> command will declare and set a variable in the context. The 
+<code>
+name
+</code> attribute is the QName of the variable. The 
+<code>
+select
+</code>, 
+<code>
+select-nodes
+</code>, or 
+<code>
+select-single-node
+</code> attribute will be the value of the variable. The 
+<code>
+scope
+</code> attribute will determine the scope of the variable. A 'chain' scope variable will only exist if the current context. A 'request' scope variable will exist for every context. A request scope is assumed if no scope attribute is provided.</p> 
+<source>
+&lt;xchain:variable xmlns:xchain="http://www.xchain.org/core/1.0" name="/some/xpath" select="/some/xpath"/ scope="chain"/&gt;
+</source>
+
+</subsection><subsection name="with">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>select</td><td>The XPath use as the root context.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_POINTER">org.xchain.annotations.AttributeType.JXPATH_POINTER</a></td><td>N/A</td><td>Pointer</td></tr>
+				</table>
+<p>The 
+<code>
+with
+</code> command will execute its child commands with the selected element as the root context.</p> 
+<source>
+&lt;xchain:with xmlns:xchain="http://www.xchain.org/core/1.0" select="/some/xpath"&gt;
+   ...
+ &lt;/xchain:with&gt;
+</source>
+
+</subsection>		</section>
+	</body>
+</document>

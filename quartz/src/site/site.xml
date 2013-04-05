@@ -18,8 +18,7 @@
 -->
 <project name="XChain Framework">
   <bannerLeft>
-    <name>XChain Framework : Core Module</name>
-    <href>http://www.xchains.org/core/</href>
+    <name>XChain Framework : Quartz Module</name>
   </bannerLeft>
 
   <publishDate format="MMM dd yyyy" />
@@ -33,23 +32,16 @@
   <body>
     <breadcrumbs>
       <item name="XChain Framework" href="../index.html"/>
-      <item name="Core Module" href="/index.html"/>
+      <item name="Quartz Module" href="/index.html"/>
     </breadcrumbs>
 
-    <menu name="Core Module">
+    <menu name="Quartz Module">
       <item name="Introduction" href="/index.html"/>
       <item name="FAQ" href="/guides/faq.html"/>
     </menu>
 
     <menu name="Documentation">
       <item name="Reference Guide" href="/guides/index.html"/>
-    </menu>
-
-    <menu name="Namespaces">
-      <item name="Core" href="/namespaces/core.html"/>
-      <item name="SAX" href="/namespaces/sax.html"/>
-      <item name="JSL" href="/namespaces/jsl.html"/>
-      <item name="CSV" href="/namespaces/csv.html"/>
     </menu>
 
     <menu ref="reports"/>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+	<properties>
+		<title>servlet namespace</title>
+	</properties>
+	<body>
+	<section name="servlet Namespace">
+	<p>Namespace URI: http://www.xchain.org/servlet/1.0</p>		<p>This namespace provides commands to access data related to the servlet request and response cycle.</p>
+	</section>
+		<section name="Available Commands">
+<subsection name="forward">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>path</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>servlet-context</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:context</td><td>ServletContext</td></tr>
+					<tr><td>response</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:response</td><td>ServletResponse</td></tr>
+					<tr><td>request</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:request</td><td>ServletRequest</td></tr>
+				</table>
+
+
+</subsection><subsection name="get-cookie">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>request</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>HttpServletRequest</td></tr>
+					<tr><td>variable</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+				</table>
+Base class to provide simple string value existence and email string validation.
+
+</subsection><subsection name="redirect">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>path</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>response</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:response</td><td>HttpServletResponse</td></tr>
+				</table>
+
+
+</subsection><subsection name="result">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>media-type</td><td>The media type for the response.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>result</td><td>The location of the ServletResponse.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:response</td><td>ServletResponse</td></tr>
+					<tr><td>disable-caching</td><td>The flag to disable response caching.</td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>\false\</td><td>Boolean</td></tr>
+					<tr><td>request</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>$servlet:request</td><td>ServletRequest</td></tr>
+				</table>
+Set the current Pipeline result to be written out to a ServletResponse. If the 
+<code>
+media-type
+</code> attribute is not specified then the media type of the current Pipeline will be used. If the Pipeline does not specify a media type and the 
+<code>
+media-type
+</code> attribute is not specified then the media type will default to 
+<code>
+text/html
+</code>. 
+<source>
+&lt;xchain:result xmlns:xchain="http://www.xchain.org/container/1.0"/&gt;
+</source>
+
+</subsection><subsection name="set-cookie">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>value</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>path</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>domain</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>maxAge</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>int</td></tr>
+					<tr><td>response</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>HttpServletResponse</td></tr>
+				</table>
+Base class to provide simple string value existence and email string validation.
+
+</subsection>		</section>
+	</body>
+</document>

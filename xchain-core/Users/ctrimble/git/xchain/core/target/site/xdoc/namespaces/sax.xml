@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><document>
+	<properties>
+		<title>sax namespace</title>
+	</properties>
+	<body>
+	<section name="sax Namespace">
+	<p>Namespace URI: http://www.xchain.org/sax/1.0</p>		The xchain sax command package.
+	</section>
+		<section name="Available Commands">
+<subsection name="command-source">
+<p>The &lt;sax:command-source/&gt; command is used in a sax pipeline to get source nodes from a command. When using this element, it is important to understand when it's children will not be executed until the surrounding pipeline element has finished building the pipeline.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:command-source&gt; 
+     ...
+   &lt;/sax:command-source&gt;
+   ...
+   &lt;sax:result&gt;
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="multi-document-result">
+<p>The &lt;sax:multi-document-result/&gt; result adds a MultiDocumentResult element to the sax pipeline.</p>
+
+</subsection><subsection name="null-result">
+<p>The &lt;sax:null-result&gt; element creates a sax result that does nothing with the sax events it receives from the pipeline.</p>a source, then be followed by zero or more transformations, followed by a result.
+<br/>
+<br/> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   ...
+   &lt;sax:null-result/&gt;
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="output-property">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td><p>The name of the output property to set.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>value</td><td><p>The value of the output property to set.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+				</table>
+<p>&lt;sax:output-property/&gt; elements are placed inside &lt;sax:transfromer/&gt; elements to set output properties on a transformer.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:source .../&gt;
+   ...
+   &lt;sax:transformer system-id="'relative-uri-of-template'"&gt;
+     &lt;sax:output-property name="'name'" value="'value'"/&gt;
+   &lt;/sax:transformer&gt;
+   ...
+   &lt;sax:result .../&gt;
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="parameter">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>name</td><td><p>The name of the parameter to set.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>value</td><td><p>The value of the parameter to set.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+				</table>
+<p>&lt;sax:parameter/&gt; elements are placed inside &lt;sax:transfromer/&gt; elements to set parameters on a transformer.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:source .../&gt;
+   ...
+   &lt;sax:transformer system-id="'relative-uri-of-template'"&gt;
+     &lt;sax:parameter name="'name'" value="'value'"/&gt;
+   &lt;/sax:transformer&gt;
+   ...
+   &lt;sax:result .../&gt;
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="pipeline">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>uri-resolver</td><td><p>The uri resolver to use when building this pipeline.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>URIResolver</td></tr>
+				</table>
+<p>The &lt;sax:pipeline&gt; command creates a sax pipeline, and then executes it. A pipeline should start with a source, then be followed by zero or more transformations, followed by a result.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   ...
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="result">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>systemId</td><td><p>DEPRICATED: Use system-id instead.  The system id to send the output to.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>system-id</td><td><p>The system id to send output to.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>path</td><td><p>The file path to send output to.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+					<tr><td>select</td><td><p>The object to send output to.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE">org.xchain.annotations.AttributeType.JXPATH_SELECT_SINGLE_NODE</a></td><td>N/A</td><td>Object</td></tr>
+				</table>
+<p>The &lt;sax:result/&gt; command adds result objects to a pipeline. This command can add several types of results, based on the attributes defined on the command. To write output to a system id, add the system-id attribute to the command:</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   ...
+   &lt;sax:result system-id="'file:/some/path'"&gt;
+ &lt;/sax:pipeline&gt;
+</source> 
+<p>To write output to a file path, add the path attribute:</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   ...
+   &lt;sax:result path="'/some/path'"&gt;
+ &lt;/sax:pipeline&gt;
+</source> 
+<p>To write output to an object in the context, add the select attribute:</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   ...
+   &lt;sax:result select="$result"&gt;
+ &lt;/sax:pipeline&gt;
+</source> 
+<p>The value of the select attribute must resovle to one of:</p>
+<ul>
+  <li>javax.xml.transform.Result</li>
+  <li>org.xml.sax.ContentHandler</li>
+  <li>org.w3c.dom.Node</li>
+  <li>java.io.OutputStream</li>
+  <li>java.io.Writer</li>
+  <li>java.io.File</li>
+</ul>
+
+</subsection><subsection name="serializer">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>method</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>\xml\</td><td>String</td></tr>
+					<tr><td>indent</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>Boolean</td></tr>
+				</table>
+<p>The &lt;sax:serializer/&gt; element adds a serialization stage to the pipeline.</p>
+
+</subsection><subsection name="transformer">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>system-id</td><td><p>The system id of the stylesheet.</p></td><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+				</table>
+<p>The &lt;sax:transformer/&gt; adds a transform to a sax pipeline. Currently, XChains supports both XSLT and STX transformations. To add a transform to a pipeline, include a &lt;sax:transformer/&gt; element between the source and result of a &lt;sax:pipeline/&gt; element.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:source .../&gt;
+   ...
+   &lt;sax:transformer system-id="'relative-uri-of-template'"/&gt;
+   ...
+   &lt;sax:result .../&gt;
+ &lt;/sax:pipeline&gt;
+</source> 
+<p>Parameters can be passed to a template by including &lt;sax:parameter/&gt; elements inside the &lt;sax:transformer/&gt; element.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:source .../&gt;
+   ...
+   &lt;sax:transformer system-id="'relative-uri-of-template'"&gt;
+     &lt;sax:parameter name="'name'" value="'value'"/&gt;
+   &lt;/sax:transformer&gt;
+   ...
+   &lt;sax:result .../&gt;
+ &lt;/sax:pipeline&gt;
+</source> 
+<p>Since the transformer element is a command, you can optionally include a template by adding a conditional element around it. For example, you can add a template based on some test using the $lt;xchain:if/&gt; element.</p> 
+<source>
+&lt;sax:pipeline xmlns:sax="http://www.xchain.org/sax/1.0"&gt;
+   &lt;sax:source .../&gt;
+   ...
+   &lt;xchain:if test="$test"/&gt;
+     &lt;sax:transformer system-id="'relative-uri-of-template'"/&gt;
+   &amp;lt:/xcahin:if&gt;
+   ...
+   &lt;sax:result .../&gt;
+ &lt;/sax:pipeline&gt;
+</source>
+
+</subsection><subsection name="url-source">
+				Attributes
+				<table>
+					<tr><th>Name</th><th>Description</th><th>Type</th><th>Default Value</th><th>Java Return Type</th></tr>
+					<tr><td>system-id</td><td/><td><a href="./attributetypes.html#org.xchain.annotations.AttributeType.JXPATH_VALUE">org.xchain.annotations.AttributeType.JXPATH_VALUE</a></td><td>N/A</td><td>String</td></tr>
+				</table>
+
+
+</subsection>		</section>
+	</body>
+</document>

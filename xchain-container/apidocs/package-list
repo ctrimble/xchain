@@ -1,0 +1,10 @@
+org.xchain.framework.filter
+org.xchain.framework.javascript
+org.xchain.framework.lifecycle
+org.xchain.framework.net.protocol.resource
+org.xchain.framework.servlet
+org.xchain.framework.transaction
+org.xchain.framework.util
+org.xchain.namespaces.javascript
+org.xchain.namespaces.jta
+org.xchain.namespaces.servlet

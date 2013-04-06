@@ -1,0 +1,23 @@
+-classpath
+'/Users/ctrimble/git/xchain/tools/execute-plugin/target/classes:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-archiver/2.0.1/maven-archiver-2.0.1.jar:/Users/ctrimble/.m2/public-repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-9/plexus-container-default-1.0-alpha-9.jar:/Users/ctrimble/.m2/public-repository/commons-collections/commons-collections/3.2/commons-collections-3.2.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-project/2.0.1/maven-project-2.0.1.jar:/Users/ctrimble/.m2/public-repository/junit/junit/4.4/junit-4.4.jar:/Users/ctrimble/.m2/public-repository/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-artifact/2.0/maven-artifact-2.0.jar:/Users/ctrimble/.m2/public-repository/org/hibernate/hibernate/3.2.5.ga/hibernate-3.2.5.ga.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/wagon/wagon-provider-api/1.0-alpha-5/wagon-provider-api-1.0-alpha-5.jar:/Users/ctrimble/.m2/public-repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar:/Users/ctrimble/.m2/public-repository/commons-logging/commons-logging/1.1.2/commons-logging-1.1.2.jar:/Users/ctrimble/.m2/public-repository/org/codehaus/plexus/plexus-utils/1.0.4/plexus-utils-1.0.4.jar:/Users/ctrimble/.m2/public-repository/antlr/antlr/2.7.6/antlr-2.7.6.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-model/2.0.1/maven-model-2.0.1.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-profile/2.0.1/maven-profile-2.0.1.jar:/Users/ctrimble/.m2/public-repository/net/sf/ehcache/ehcache/1.2.3/ehcache-1.2.3.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-repository-metadata/2.0.1/maven-repository-metadata-2.0.1.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-artifact-manager/2.0.1/maven-artifact-manager-2.0.1.jar:/Users/ctrimble/.m2/public-repository/cglib/cglib/2.1_3/cglib-2.1_3.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/surefire/surefire-api/2.4.2/surefire-api-2.4.2.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/maven-plugin-api/2.0/maven-plugin-api-2.0.jar:/Users/ctrimble/.m2/public-repository/org/codehaus/plexus/plexus-archiver/1.0-alpha-4/plexus-archiver-1.0-alpha-4.jar:/Users/ctrimble/.m2/public-repository/asm/asm-attrs/1.5.3/asm-attrs-1.5.3.jar:/Users/ctrimble/.m2/public-repository/asm/asm/1.5.3/asm-1.5.3.jar:/Users/ctrimble/.m2/public-repository/org/apache/maven/surefire/surefire-booter/2.4.2/surefire-booter-2.4.2.jar:/Users/ctrimble/.m2/public-repository/javax/transaction/jta/1.0.1B/jta-1.0.1B.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/ctrimble/git/xchain/tools/execute-plugin/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2013 XChain Framework. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/ctrimble/git/xchain/tools/execute-plugin/target/site/apidocs'
+-docencoding
+'UTF-8'
+-docfilessubdirs
+-doctitle
+'XChain Execute Plugin 0.5.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'XChain Execute Plugin 0.5.0-SNAPSHOT API'

@@ -17,8 +17,6 @@
 -docfilessubdirs
 -doctitle
 'XChain Framework 0.5.0-SNAPSHOT Test API'
--link
-'../apidocs'
 -use
 -version
 -windowtitle

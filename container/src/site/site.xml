@@ -19,7 +19,6 @@
 <project name="XChain Framework">
   <bannerLeft>
     <name>XChain Framework : Container Module</name>
-    <href>http://www.xchains.org/container/</href>
   </bannerLeft>
 
   <publishDate format="MMM dd yyyy" />
@@ -32,17 +31,11 @@
 
   <body>
     <breadcrumbs>
-      <item name="XChain Framework" href="../index.html"/>
       <item name="Container Module" href="/index.html"/>
     </breadcrumbs>
 
     <menu name="Container Module">
       <item name="Introduction" href="/index.html"/>
-      <item name="FAQ" href="/guides/faq.html"/>
-    </menu>
-
-    <menu name="Documentation">
-      <item name="Reference Guide" href="/guides/index.html"/>
     </menu>
 
     <menu name="Namespaces">

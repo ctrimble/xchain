@@ -19,7 +19,6 @@
 <project name="XChain Framework">
   <bannerLeft>
     <name>XChain Framework : Core Module</name>
-    <href>http://www.xchains.org/core/</href>
   </bannerLeft>
 
   <publishDate format="MMM dd yyyy" />
@@ -32,17 +31,18 @@
 
   <body>
     <breadcrumbs>
-      <item name="XChain Framework" href="../index.html"/>
       <item name="Core Module" href="/index.html"/>
     </breadcrumbs>
 
     <menu name="Core Module">
       <item name="Introduction" href="/index.html"/>
-      <item name="FAQ" href="/guides/faq.html"/>
     </menu>
 
     <menu name="Documentation">
-      <item name="Reference Guide" href="/guides/index.html"/>
+      <item name="Command Definition" href="/guides/command-definition.html"/>
+      <item name="Attribute Defintiions" href="/guides/attribute-definition.html"/>
+      <item name="Lifecycle" href="/guides/lifecycle.html"/>
+      <item name="SAX Pipelines" href="/guides/commands-that-output-sax.html"/>
     </menu>
 
     <menu name="Namespaces">

@@ -19,7 +19,6 @@
 <project name="XChain Framework">
   <bannerLeft>
     <name>XChain Framework : Hibernate Module</name>
-    <href>http://www.xchains.org/hibernate/</href>
   </bannerLeft>
 
   <publishDate format="MMM dd yyyy" />
@@ -32,17 +31,11 @@
 
   <body>
     <breadcrumbs>
-      <item name="XChain Framework" href="../index.html"/>
       <item name="Hibernate Module" href="/index.html"/>
     </breadcrumbs>
 
     <menu name="Hibernate Module">
       <item name="Introduction" href="/index.html"/>
-      <item name="FAQ" href="/guides/faq.html"/>
-    </menu>
-
-    <menu name="Documentation">
-      <item name="Reference Guide" href="/guides/index.html"/>
     </menu>
 
     <menu name="Namespaces">

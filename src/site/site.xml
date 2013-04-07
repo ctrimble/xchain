@@ -38,12 +38,6 @@
 
     <menu name="Overview">
       <item name="Introduction" href="/index.html"/>
-      <item name="FAQ" href="/guides/faq.html"/>
-    </menu>
-
-    <menu name="Use XChain">
-      <item name="Getting Started" href="/guides/index.html"/>
-      <item name="5-Minute Tutorials" href="/guides/tutorial.html"/>
     </menu>
 
     <menu name="Modules">
